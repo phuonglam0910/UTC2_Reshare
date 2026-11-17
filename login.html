@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reshare UTC2 – Nền tảng chia sẻ và trao đổi giáo trình, đồ án, dụng cụ thực hành cho sinh viên Trường Đại học Giao thông vận tải Phân hiệu tại TP.HCM.">
+  <title>Đăng nhập – Reshare UTC2</title>
+
+  <!-- Google Fonts: Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style/login.css">
+</head>
+
+<body>
+  <!-- ========================================================
+       A. TRANG CHÍNH (Split Screen 54% Brand / 46% Form)
+       ======================================================== -->
+  <main class="layout-wrapper" id="mainLayout">
+
+    <!-- ——————————————————————————————————————————————————
+         BÊN TRÁI: BẢNG THƯƠNG HIỆU UTC2
+         —————————————————————————————————————————————————— -->
+    <section class="brand-side" aria-label="Giới thiệu Reshare UTC2">
+      
+      <!-- Header: Logo chính thức UTC2 + Tên Reshare UTC2 -->
+      <header class="brand-header">
+        
+        <!-- Badge định danh cơ sở Phân hiệu UTC2 -->
+        <div class="utc2-badge">
+          <div class="utc2-crest" aria-hidden="true">
+            <img src="assets/utc2-logo.jpg" alt="">
+          </div>
+          <span class="utc2-badge-text">Phân hiệu ĐH Giao thông vận tải tại TP.HCM</span>
+        </div>
+
+        <!-- Tên sản phẩm Reshare UTC2 -->
+        <div class="app-branding brand-glass-panel">
+          <div class="app-logo-icon" aria-hidden="true">
+            <img src="assets/reshare-mark.png" alt="">
+          </div>
+          <div>
+            <h2 class="app-brand-title">Reshare UTC2</h2>
+            <span class="app-brand-sub">Cổng trao tặng & sang nhượng đồ dùng sinh viên</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Nội dung thông điệp chính -->
+      <div class="brand-content">
+        <div class="brand-copy brand-glass-panel">
+          <h1 class="brand-tagline">Đồ cũ của bạn,<br>bàn học của khóa sau.</h1>
+          <p class="brand-desc">
+            Nền tảng gắn kết các thế hệ sinh viên UTC2: chuyển giao giáo trình, dụng cụ vẽ kỹ thuật, đồ án và tài liệu ôn thi hoàn toàn miễn phí hoặc chia sẻ với giá hỗ trợ.
+          </p>
+        </div>
+
+        <!-- Họa tiết con đường chuyển động và 3 thẻ đồ dùng lơ lửng -->
+        <div class="road-scene" aria-hidden="true">
+          
+          <!-- Thẻ 1: Giáo trình (có điểm nhấn chấm vàng duy nhất) -->
+          <div class="item-chip chip-pos-1">
+            <div class="item-chip-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <div>
+              <span class="item-chip-title">Giáo trình Sức bền vật liệu</span>
+              <span class="item-chip-badge"><span class="item-chip-star"></span>Miễn phí 100%</span>
+            </div>
+          </div>
+
+          <!-- Thẻ 2: Bộ dụng cụ vẽ kỹ thuật -->
+          <div class="item-chip chip-pos-2">
+            <div class="item-chip-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <span class="item-chip-title">Bộ dụng cụ vẽ kỹ thuật</span>
+              <span class="item-chip-badge">Còn rất mới</span>
+            </div>
+          </div>
+
+          <!-- Thẻ 3: Đề cương Cơ học đất -->
+          <div class="item-chip chip-pos-3">
+            <div class="item-chip-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div>
+              <span class="item-chip-title">Đề cương Cơ học đất</span>
+              <span class="item-chip-badge">Kỳ 1 năm 2026</span>
+            </div>
+          </div>
+
+          <!-- SVG Tuyến đường cong chuyển động -->
+          <svg class="road-svg" viewBox="0 0 530 170" fill="none" preserveAspectRatio="none">
+            <!-- Mặt đường xanh nhạt sáng mềm -->
+            <path d="M0 120 C140 60, 260 145, 530 85" stroke="rgba(255,255,255,0.45)" stroke-width="44" stroke-linecap="round"/>
+            <!-- Viền vạch lề đường -->
+            <path d="M0 142 C140 82, 260 167, 530 107" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+            <path d="M0 98 C140 38, 260 123, 530 63" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+            <!-- Vạch kẻ tim đường đứt nét chạy liên tục -->
+            <path class="road-dash-line" d="M0 120 C140 60, 260 145, 530 85" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ——————————————————————————————————————————————————
+         BÊN PHẢI: KHU VỰC FORM (ĐĂNG NHẬP / QUÊN MK / ĐĂNG KÝ)
+         —————————————————————————————————————————————————— -->
+    <section class="form-side" id="formSide" aria-label="Khu vực đăng nhập">
+      
+      <div class="form-stage" id="formStage">
+
+        <!-- ==============================================
+             MÀN HÌNH 1: ĐĂNG NHẬP (Mặc định)
+             ============================================== -->
+        <div class="screen-panel is-active" id="screenLogin">
+          
+          <div class="form-header">
+            <h2 class="form-heading">Đăng nhập</h2>
+            <p class="form-caption">Nhập mã số sinh viên UTC2 và mật khẩu để tiếp tục.</p>
+          </div>
+
+          <!-- Hộp cảnh báo lỗi rung nhẹ -->
+          <div class="form-alert-banner is-error" id="loginAlertBox" role="alert">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="loginAlertMsg">Mã số sinh viên hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.</span>
+          </div>
+
+          <form id="formLogin" novalidate autocomplete="on">
+            
+            <!-- Trường Mã số sinh viên -->
+            <div class="form-field" id="fieldMssv">
+              <label class="field-label" for="txtMssv">Mã số sinh viên</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <input
+                  class="field-control"
+                  id="txtMssv"
+                  type="text"
+                  inputmode="numeric"
+                  pattern="[0-9]{8,12}"
+                  maxlength="12"
+                  autocomplete="username"
+                  placeholder="MSSV"
+                  required
+                  aria-describedby="mssvErrorDesc"
+                />
+              </div>
+              <p class="field-error-text" id="mssvErrorDesc"></p>
+            </div>
+
+            <!-- Trường Mật khẩu -->
+            <div class="form-field" id="fieldPassword">
+              <label class="field-label" for="txtPassword">Mật khẩu</label>
+              <div class="input-wrapper input-wrapper--password">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <input
+                  class="field-control"
+                  id="txtPassword"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Nhập mật khẩu của bạn"
+                  required
+                  aria-describedby="pwErrorDesc"
+                />
+                <!-- Huy hiệu cảnh báo Caps Lock -->
+                <span class="caps-badge" id="capsIndicator">Caps Lock</span>
+                <!-- Nút bật/tắt ẩn hiện mật khẩu -->
+                <button class="btn-toggle-eye" id="btnTogglePw" type="button" aria-label="Hiện mật khẩu">
+                  <!-- Mắt mở -->
+                  <svg class="icon-eye-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <!-- Mắt gạch chéo -->
+                  <svg class="icon-eye-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="field-error-text" id="pwErrorDesc"></p>
+            </div>
+
+            <!-- Ghi nhớ MSSV + Quên mật khẩu -->
+            <div class="form-aux-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="chkRememberMssv" autocomplete="off" />
+                <span class="checkbox-text">Ghi nhớ phiên đăng nhập</span>
+              </label>
+              <a class="text-link" href="#" id="linkToForgot" role="button">Quên mật khẩu?</a>
+            </div>
+
+            <!-- Nút Đăng nhập chính -->
+            <button class="btn-primary-action" id="btnSubmitLogin" type="submit">
+              <span class="action-label">Đăng nhập</span>
+              <span class="action-spinner" aria-hidden="true"></span>
+              <svg class="action-tick-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 13l4 4L19 7"/>
+              </svg>
+            </button>
+          </form>
+
+          <!-- Đăng nhập SSO bằng Email sinh viên UTC2 -->
+          <div class="auth-divider" role="separator">hoặc</div>
+          <button class="btn-sso-login" id="btnSsoLogin" type="button">
+            <!-- Icon Microsoft Office 365 / UTC2 Mail -->
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4H11V11H4V4Z" fill="#F25022"/>
+              <path d="M13 4H20V11H13V4Z" fill="#7FBA00"/>
+              <path d="M4 13H11V20H4V13Z" fill="#00A4EF"/>
+              <path d="M13 13H20V20H13V13Z" fill="#FFB900"/>
+            </svg>
+            <span>Tiếp tục với email sinh viên UTC2</span>
+          </button>
+
+          <!-- Chuyển sang Đăng ký -->
+          <p class="switch-auth-mode">
+            Chưa có tài khoản?
+            <a class="text-link" href="#" id="linkToRegister" role="button">Đăng ký ngay</a>
+          </p>
+        </div>
+
+
+        <!-- ==============================================
+             MÀN HÌNH 2: QUÊN MẬT KHẨU
+             ============================================== -->
+        <div class="screen-panel is-hidden-right" id="screenForgot">
+          <a class="back-action-link" href="#" id="btnBackFromForgot" role="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Quay lại đăng nhập</span>
+          </a>
+
+          <div class="form-header">
+            <h2 class="form-heading">Quên mật khẩu</h2>
+            <p class="form-caption">Nhập email bạn đã dùng để đăng ký. Có thể sử dụng email cá nhân bất kỳ.</p>
+          </div>
+
+          <form id="formForgot" novalidate>
+            <div class="form-field">
+              <label class="field-label" for="txtForgotEmail">Email</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+                </svg>
+                <input
+                  class="field-control"
+                  id="txtForgotEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <button class="btn-primary-action" type="button">Gửi liên kết đặt lại</button>
+            <p class="form-note">Chức năng gửi email đặt lại mật khẩu sẽ được kết nối sau.</p>
+          </form>
+        </div>
+
+
+        <!-- ==============================================
+             MÀN HÌNH 3: ĐĂNG KÝ TÀI KHOẢN
+             ============================================== -->
+        <div class="screen-panel is-hidden-right" id="screenRegister">
+          <a class="back-action-link" href="#" id="btnBackFromRegister" role="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Quay lại đăng nhập</span>
+          </a>
+
+          <div class="form-header">
+            <h2 class="form-heading">Tạo tài khoản mới</h2>
+            <p class="form-caption">Đăng ký bằng email cá nhân bất kỳ, không cần MSSV hay email UTC2.</p>
+          </div>
+
+          <form id="formRegister" autocomplete="on">
+            <div class="form-field">
+              <label class="field-label" for="registerFullName">Họ và tên</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <input class="field-control" id="registerFullName" name="fullName" type="text" autocomplete="name" placeholder="Nhập họ và tên" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="field-label" for="registerEmail">Email</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+                </svg>
+                <input class="field-control" id="registerEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="field-label" for="registerPassword">Mật khẩu</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <input class="field-control" id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Tối thiểu 8 ký tự" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="field-label" for="registerPasswordConfirm">Nhập lại mật khẩu</label>
+              <div class="input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <input class="field-control" id="registerPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Nhập lại mật khẩu" required>
+              </div>
+            </div>
+
+            <button class="btn-primary-action" type="button" aria-describedby="registerNote">Tạo tài khoản</button>
+            <p class="form-note" id="registerNote">Giao diện đăng ký đang được thiết kế; chức năng tạo tài khoản chưa kết nối máy chủ.</p>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+
+  <!-- ========================================================
+       B. CIRCLE-REVEAL OVERLAY (Hiệu ứng chuyển cảnh đăng nhập)
+       ======================================================== -->
+  <div class="circle-expand-overlay" id="circleExpandOverlay" aria-hidden="true">
+    <div class="welcome-card">
+      <h2 class="welcome-user-title" id="welcomeUserGreeting">Xin chào, Nguyễn Văn An!</h2>
+      <div class="welcome-meter">
+        <div class="welcome-meter-fill" id="welcomeMeterFill"></div>
+      </div>
+      <p class="welcome-sub-note">Đang đồng bộ dữ liệu sách và dụng cụ học tập UTC2…</p>
+    </div>
+  </div>
+
+
+  <!-- ========================================================
+       C. TRANG GIỮ CHỖ TRANG CHỦ (Sau khi đăng nhập xong)
+       ======================================================== -->
+  <section class="home-showcase-view" id="homeShowcaseView" aria-label="Trang chủ giữ chỗ">
+    <div class="home-portal-card">
+      <div class="home-portal-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <h2 class="home-portal-title">Chào mừng bạn đến Reshare UTC2</h2>
+      <p class="home-portal-desc">
+        Bạn đã đăng nhập thành công vào hệ thống trao đổi đồ dùng sinh viên Phân hiệu Trường Đại học Giao thông vận tải tại TP.HCM. Giao diện trang chủ khám phá sách và dụng cụ đang được hoàn thiện.
+      </p>
+      <button class="btn-portal-logout" id="btnLogoutPortal" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span>Đăng xuất</span>
+      </button>
+    </div>
+  </section>
+
+
+  <!-- ========================================================
+       D. JAVASCRIPT THUẦN (Xử lý tương tác, Validation, Animation)
+       ======================================================== -->
+  <script src="script/login.js"></script>
+</body>
+</html>
