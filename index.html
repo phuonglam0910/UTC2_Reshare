@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reshare UTC2 kết nối sinh viên để trao đổi, cho tặng đồ dùng học tập và chia sẻ tin thất lạc.">
+  <meta name="theme-color" content="#f5faff">
+  <title>Reshare UTC2 — Chia sẻ để hành trình thêm xanh</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/home.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Bỏ qua điều hướng</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Reshare UTC2 - Trang chủ">
+        <img class="brand-mark" src="assets/reshare-mark.png" alt="">
+        <span class="brand-copy">
+          <strong>Reshare <span>UTC2</span></strong>
+          <small>Chia sẻ để hành trình thêm xanh</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="menu-toggle-label">Mở menu</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Điều hướng chính">
+        <a class="nav-link is-current" href="index.html" aria-current="page">Trang chủ</a>
+        <a class="nav-link" href="#do-dung">Đồ dùng</a>
+        <a class="nav-link" href="#tin-that-lac">Tin thất lạc</a>
+        <a class="nav-link" href="#gioi-thieu">Giới thiệu</a>
+        <a class="button button-outline nav-login" href="login.html">Đăng nhập</a>
+        <a class="button button-primary nav-register" href="login.html">Tham gia ngay</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> Cộng đồng sinh viên UTC2</span>
+          <h1 id="hero-title">Món đồ cũ.<br><span>Hành trình mới.</span></h1>
+          <p class="hero-description">
+            Trao lại đồ dùng học tập, tìm món đồ bạn cần và cùng nhau lan tỏa thói quen tiêu dùng bền vững trong cộng đồng UTC2.
+          </p>
+          <form class="hero-search" id="search-form" role="search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <label class="visually-hidden" for="site-search">Tìm đồ dùng hoặc tin thất lạc</label>
+            <input id="site-search" type="search" placeholder="Thử “giáo trình”, “bình nước”..." autocomplete="off">
+            <button class="button button-primary" type="submit">Tìm kiếm</button>
+          </form>
+          <div class="hero-note">
+            <span class="hero-note-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-4.4 7-11V5l-7-3-7 3v5c0 6.6 7 11 7 11Z"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <span>Xem tin công khai không cần đăng nhập</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-photo" role="img" aria-label="Khuôn viên Phân hiệu Trường Đại học Giao thông vận tải tại TP. Hồ Chí Minh"></div>
+          <div class="floating-note note-top">
+            <span class="note-icon note-icon-green" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-11a7 7 0 0 1 14 0c0 6.6-7 11-7 11Z"/><circle cx="12" cy="10" r="2.3"/></svg>
+            </span>
+            <span><strong>Gần bạn hơn</strong><small>Chung một mái trường</small></span>
+          </div>
+          <div class="floating-note note-bottom">
+            <span class="note-icon note-icon-yellow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3v18M17 7.5c0-1.7-2.2-3-5-3S7 5.8 7 7.5 9.2 10.5 12 10.5s5 1.3 5 3-2.2 3-5 3-5-1.3-5-3"/></svg>
+            </span>
+            <span><strong>Trao đi giá trị</strong><small>Tiết kiệm, thân thiện</small></span>
+          </div>
+          <span class="visual-caption">Phân hiệu UTC2 · TP. Hồ Chí Minh</span>
+        </div>
+      </div>
+      <div class="hero-decoration" aria-hidden="true"></div>
+    </section>
+
+    <section class="quick-links" aria-label="Khám phá Reshare">
+      <div class="container quick-links-inner">
+        <a class="quick-link" href="#do-dung">
+          <span class="quick-link-icon icon-blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8"/></svg>
+          </span>
+          <span><strong>Đồ dùng học tập</strong><small>Trao đổi & cho tặng</small></span>
+          <svg class="quick-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <a class="quick-link" href="#tin-that-lac">
+          <span class="quick-link-icon icon-peach" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4 4M8 10h5m-2.5-2.5v5"/></svg>
+          </span>
+          <span><strong>Tin thất lạc</strong><small>Báo mất & tìm đồ</small></span>
+          <svg class="quick-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <a class="quick-link" href="#cach-hoat-dong">
+          <span class="quick-link-icon icon-yellow" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M20 7h-9m-4 0H4m16 10h-4m-4 0H4"/><circle cx="5.5" cy="7" r="1.5"/><circle cx="14.5" cy="17" r="1.5"/></svg>
+          </span>
+          <span><strong>Bắt đầu dễ dàng</strong><small>Chỉ với vài bước</small></span>
+          <svg class="quick-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section listings-section" id="do-dung" aria-labelledby="listings-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Góc chia sẻ</span>
+            <h2 id="listings-title">Tìm món đồ tiếp theo của bạn</h2>
+            <p class="section-description">Khám phá đồ dùng học tập và tin thất lạc được chia sẻ trong cộng đồng.</p>
+          </div>
+          <a class="text-link desktop-link" href="login.html">Bạn có món đồ muốn chia sẻ? <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="listing-controls">
+          <div class="listing-tabs" role="tablist" aria-label="Loại tin đăng">
+            <button class="listing-tab is-active" id="tab-items" type="button" role="tab" aria-selected="true" aria-controls="listing-grid" data-listing-type="items">Đồ dùng</button>
+            <button class="listing-tab" id="tab-lost" type="button" role="tab" aria-selected="false" aria-controls="listing-grid" data-listing-type="lost">Thất lạc</button>
+          </div>
+          <div class="category-filters" aria-label="Lọc theo danh mục">
+            <button class="filter-chip is-active" type="button" data-category="all" aria-pressed="true">Tất cả</button>
+            <button class="filter-chip" type="button" data-category="sach" aria-pressed="false">Sách & tài liệu</button>
+            <button class="filter-chip" type="button" data-category="hoc-tap" aria-pressed="false">Dụng cụ học tập</button>
+            <button class="filter-chip" type="button" data-category="ca-nhan" aria-pressed="false">Đồ dùng cá nhân</button>
+          </div>
+        </div>
+
+        <p class="demo-notice">Một số tin minh họa để giới thiệu giao diện.</p>
+
+        <div class="listing-grid" id="listing-grid" role="tabpanel" aria-labelledby="tab-items">
+          <article class="listing-card" data-type="items" data-category="sach" data-search="giáo trình sức bền vật liệu sách tài liệu miễn phí">
+            <div class="listing-art art-book" aria-hidden="true">
+              <span class="listing-badge badge-give">Cho tặng</span>
+              <svg viewBox="0 0 64 64"><path d="M14 13a6 6 0 0 1 6-6h31v43H20a6 6 0 0 0-6 6z"/><path d="M14 13v43m8-37h20m-20 8h20"/></svg>
+              <span class="art-caption">Học tốt nhé!</span>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-meta"><span>Sách & tài liệu</span><span class="meta-dot"></span><span>Hôm nay</span></div>
+              <h3>Giáo trình Sức bền vật liệu</h3>
+              <p class="listing-location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Khuôn viên UTC2
+              </p>
+              <div class="listing-card-footer"><span class="price price-free">Miễn phí</span><a class="card-action" href="login.html" aria-label="Liên hệ về Giáo trình Sức bền vật liệu">Liên hệ <span aria-hidden="true">→</span></a></div>
+            </div>
+          </article>
+
+          <article class="listing-card" data-type="items" data-category="hoc-tap" data-search="bộ thước vẽ kỹ thuật dụng cụ học tập">
+            <div class="listing-art art-tools" aria-hidden="true">
+              <span class="listing-badge badge-exchange">Trao đổi</span>
+              <svg viewBox="0 0 64 64"><path d="m11 47 30-30 12 12-30 30H11z"/><path d="m35 23 12 12m-27 3 6 6m-1-18 6 6m-1-18 6 6"/></svg>
+              <span class="art-caption">Dùng còn tốt</span>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-meta"><span>Dụng cụ học tập</span><span class="meta-dot"></span><span>Hôm qua</span></div>
+              <h3>Bộ thước vẽ kỹ thuật</h3>
+              <p class="listing-location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Khuôn viên UTC2
+              </p>
+              <div class="listing-card-footer"><span class="price">Đổi lấy dụng cụ học tập</span><a class="card-action" href="login.html" aria-label="Liên hệ về Bộ thước vẽ kỹ thuật">Liên hệ <span aria-hidden="true">→</span></a></div>
+            </div>
+          </article>
+
+          <article class="listing-card" data-type="items" data-category="ca-nhan" data-search="bình nước inox đồ dùng cá nhân">
+            <div class="listing-art art-bottle" aria-hidden="true">
+              <span class="listing-badge badge-give">Cho tặng</span>
+              <svg viewBox="0 0 64 64"><path d="M25 10h14v8l5 6v28a5 5 0 0 1-5 5H25a5 5 0 0 1-5-5V24l5-6z"/><path d="M25 18h14m-14 17h18"/></svg>
+              <span class="art-caption">Mang theo mỗi ngày</span>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-meta"><span>Đồ dùng cá nhân</span><span class="meta-dot"></span><span>2 ngày trước</span></div>
+              <h3>Bình nước inox còn mới</h3>
+              <p class="listing-location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Khuôn viên UTC2
+              </p>
+              <div class="listing-card-footer"><span class="price price-free">Miễn phí</span><a class="card-action" href="login.html" aria-label="Liên hệ về Bình nước inox còn mới">Liên hệ <span aria-hidden="true">→</span></a></div>
+            </div>
+          </article>
+
+          <article class="listing-card is-hidden" data-type="lost" data-category="ca-nhan" data-search="ví màu nâu giấy tờ cá nhân đánh rơi mất">
+            <div class="listing-art art-wallet" aria-hidden="true">
+              <span class="listing-badge badge-lost">Đã mất</span>
+              <svg viewBox="0 0 64 64"><rect x="10" y="17" width="44" height="34" rx="6"/><path d="M10 24h44m-18 13h18m-14 0h.01"/><path d="M17 17v-4a4 4 0 0 1 4-4h25"/></svg>
+              <span class="art-caption">Ví màu nâu</span>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-meta"><span>Đồ dùng cá nhân</span><span class="meta-dot"></span><span>Hôm nay</span></div>
+              <h3>Tìm ví màu nâu bị thất lạc</h3>
+              <p class="listing-location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Khu vực thư viện
+              </p>
+              <div class="listing-card-footer"><span class="price">Liên hệ người đăng</span><a class="card-action" href="login.html" aria-label="Liên hệ về tin tìm ví màu nâu">Liên hệ <span aria-hidden="true">→</span></a></div>
+            </div>
+          </article>
+
+          <article class="listing-card is-hidden" data-type="lost" data-category="hoc-tap" data-search="thẻ sinh viên tìm thấy nhặt được">
+            <div class="listing-art art-card" aria-hidden="true">
+              <span class="listing-badge badge-found">Đã nhặt</span>
+              <svg viewBox="0 0 64 64"><rect x="8" y="14" width="48" height="36" rx="5"/><circle cx="22" cy="30" r="6"/><path d="M14 43c2-5 14-5 16 0m7-16h12m-12 8h12"/></svg>
+              <span class="art-caption">Thẻ sinh viên</span>
+            </div>
+            <div class="listing-card-body">
+              <div class="listing-meta"><span>Giấy tờ & thẻ</span><span class="meta-dot"></span><span>Hôm qua</span></div>
+              <h3>Nhặt được thẻ sinh viên</h3>
+              <p class="listing-location">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Gần nhà xe UTC2
+              </p>
+              <div class="listing-card-footer"><span class="price">Tìm chủ nhân</span><a class="card-action" href="login.html" aria-label="Liên hệ về tin nhặt được thẻ sinh viên">Liên hệ <span aria-hidden="true">→</span></a></div>
+            </div>
+          </article>
+        </div>
+        <p class="empty-state" id="empty-state" hidden>Chưa tìm thấy tin phù hợp. Hãy thử từ khóa hoặc danh mục khác nhé.</p>
+        <p class="search-status visually-hidden" id="search-status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="lost-banner" id="tin-that-lac" aria-labelledby="lost-title">
+      <div class="container lost-banner-inner">
+        <div class="lost-banner-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><circle cx="27" cy="27" r="16"/><path d="m39 39 14 14m-26-26v8m0-16v.1"/></svg>
+        </div>
+        <div class="lost-banner-copy">
+          <span class="eyebrow">Đồ thất lạc, đừng lo</span>
+          <h2 id="lost-title">Thấy đồ bị bỏ quên? Giúp nhau tìm lại nhé.</h2>
+          <p>Xem tin báo mất, tin nhặt được và kết nối với người đăng trong cộng đồng UTC2.</p>
+        </div>
+        <button class="button button-light" type="button" data-open-lost>Khám phá tin thất lạc <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+
+    <section class="section how-section" id="cach-hoat-dong" aria-labelledby="how-title">
+      <div class="container">
+        <div class="section-heading section-heading-centered">
+          <div>
+            <span class="eyebrow">Bắt đầu thật đơn giản</span>
+            <h2 id="how-title">Một vòng chia sẻ, nhiều điều ý nghĩa</h2>
+            <p class="section-description">Tìm được thứ mình cần hoặc giúp một món đồ hữu ích có thêm hành trình mới.</p>
+          </div>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <span class="step-icon step-icon-blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            </span>
+            <h3>Tìm kiếm</h3>
+            <p>Khám phá đồ dùng và tin thất lạc công khai ngay cả khi chưa đăng nhập.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <span class="step-icon step-icon-green" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/></svg>
+            </span>
+            <h3>Kết nối</h3>
+            <p>Đăng nhập để liên hệ, gửi yêu cầu nhận hoặc trao đổi món đồ phù hợp.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <span class="step-icon step-icon-yellow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 7h-9m-4 0H4m16 10h-4m-4 0H4"/><circle cx="5.5" cy="7" r="1.5"/><circle cx="14.5" cy="17" r="1.5"/></svg>
+            </span>
+            <h3>Trao đi & nhận lại</h3>
+            <p>Đăng tin cho tặng, trao đổi hoặc báo mất, nhặt được đồ trong trường.</p>
+          </article>
+        </div>
+        <div class="roles-note">
+          <span class="roles-note-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1m2-12a3 3 0 0 1 0 6m1 2a5 5 0 0 1 3 4v1"/></svg>
+          </span>
+          <p><strong>Dành cho cả cộng đồng.</strong> Khách truy cập có thể xem và tìm kiếm; sinh viên đăng nhập để quản lý tin cá nhân và theo dõi yêu cầu. Quản trị viên thống kê hệ thống, quản lý tài khoản, tin đăng, danh mục, kiểm duyệt nội dung và xử lý báo cáo.</p>
+          <a href="login.html">Đăng nhập <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="gioi-thieu" aria-labelledby="about-title">
+      <div class="container about-grid">
+        <div class="about-image" role="img" aria-label="Khuôn viên UTC2 với không gian xanh"></div>
+        <div class="about-copy">
+          <span class="eyebrow">Reshare UTC2 là gì?</span>
+          <h2 id="about-title">Chia sẻ vật dụng,<br>kết nối cộng đồng.</h2>
+          <p>Reshare UTC2 là không gian dành cho sinh viên Phân hiệu Trường Đại học Giao thông vận tải tại TP. Hồ Chí Minh để trao đổi, cho tặng đồ dùng học tập và hỗ trợ nhau tìm đồ thất lạc.</p>
+          <ul class="about-points">
+            <li><span aria-hidden="true">✓</span> Tận dụng đồ dùng còn giá trị</li>
+            <li><span aria-hidden="true">✓</span> Kết nối người cần với người có</li>
+            <li><span aria-hidden="true">✓</span> Chung tay xây dựng cộng đồng xanh</li>
+          </ul>
+          <a class="button button-primary" href="login.html">Tham gia cộng đồng <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a class="brand brand-footer" href="index.html" aria-label="Reshare UTC2 - Trang chủ">
+          <img class="brand-mark" src="assets/reshare-mark.png" alt="">
+          <span class="brand-copy">
+            <strong>Reshare <span>UTC2</span></strong>
+            <small>Chia sẻ để hành trình thêm xanh</small>
+          </span>
+        </a>
+        <p>Nền tảng chia sẻ và kết nối cộng đồng sinh viên UTC2.</p>
+        <div class="school-mark">
+          <img src="assets/utc2-logo.jpg" alt="Logo UTC2">
+          <span>Phân hiệu Trường Đại học<br>Giao thông vận tải tại TP. Hồ Chí Minh</span>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h2>Khám phá</h2>
+        <a href="#do-dung">Đồ dùng học tập</a>
+        <a href="#tin-that-lac">Tin thất lạc</a>
+        <a href="#cach-hoat-dong">Cách hoạt động</a>
+      </div>
+      <div class="footer-column">
+        <h2>Tài khoản</h2>
+        <a href="login.html">Đăng nhập</a>
+        <a href="login.html">Đăng ký sinh viên</a>
+        <a href="login.html">Dành cho quản trị viên</a>
+      </div>
+      <div class="footer-column footer-help">
+        <h2>Cùng chia sẻ</h2>
+        <p>Có món đồ không còn dùng đến? Hãy trao cơ hội để món đồ ấy tiếp tục hữu ích.</p>
+        <a class="footer-cta" href="login.html">Đăng tin chia sẻ <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="current-year">2026</span> Reshare UTC2. Dành cho cộng đồng sinh viên UTC2.</span>
+      <a href="#main-content">Lên đầu trang ↑</a>
+    </div>
+  </footer>
+
+  <script src="script/home.js"></script>
+</body>
+</html>
