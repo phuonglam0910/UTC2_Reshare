@@ -104,6 +104,7 @@
   linkToRegister.addEventListener('click', (e) => { e.preventDefault(); switchScreen('register'); });
   btnBackFromForgot.addEventListener('click', (e) => { e.preventDefault(); switchScreen('login'); });
   btnBackFromRegister.addEventListener('click', (e) => { e.preventDefault(); switchScreen('login'); });
+  if (window.location.hash === '#register') switchScreen('register');
 
   /* --- 5. KIỂM TRA DỮ LIỆU (VALIDATION THỜI GIAN THỰC) --- */
   function validateMssv(value) {
