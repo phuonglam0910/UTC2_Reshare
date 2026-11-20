@@ -738,9 +738,11 @@ html, body {
   transform: translateY(-1px);
 }
 
-.btn-sso-login svg {
-  width: 20px;
-  height: 20px;
+.btn-sso-login img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
   flex-shrink: 0;
 }
 

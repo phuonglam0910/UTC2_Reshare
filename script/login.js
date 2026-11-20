@@ -3,7 +3,7 @@
 
   /* --- 1. DỮ LIỆU TÀI KHOẢN MẪU (Thay thế bằng API backend) --- */
   const MOCK_CREDENTIALS = {
-    '2051010001': {
+    'nguyenvanan@gmail.com': {
       password: 'utc2@123',
       fullName: 'Nguyễn Văn An'
     }
@@ -17,17 +17,17 @@
 
   // Form Đăng nhập
   const formLogin          = document.getElementById('formLogin');
-  const txtMssv            = document.getElementById('txtMssv');
+  const txtEmail           = document.getElementById('txtEmail');
   const txtPassword        = document.getElementById('txtPassword');
-  const fieldMssv          = document.getElementById('fieldMssv');
+  const fieldEmail         = document.getElementById('fieldEmail');
   const fieldPassword      = document.getElementById('fieldPassword');
-  const mssvErrorDesc      = document.getElementById('mssvErrorDesc');
+  const emailErrorDesc     = document.getElementById('emailErrorDesc');
   const pwErrorDesc        = document.getElementById('pwErrorDesc');
   const loginAlertBox      = document.getElementById('loginAlertBox');
   const btnSubmitLogin     = document.getElementById('btnSubmitLogin');
   const btnTogglePw        = document.getElementById('btnTogglePw');
   const capsIndicator      = document.getElementById('capsIndicator');
-  const chkRememberMssv    = document.getElementById('chkRememberMssv');
+  const chkRememberEmail   = document.getElementById('chkRememberEmail');
   const btnSsoLogin        = document.getElementById('btnSsoLogin');
 
   // Chuyển màn hình
@@ -44,12 +44,12 @@
   const homeShowcaseView   = document.getElementById('homeShowcaseView');
   const btnLogoutPortal    = document.getElementById('btnLogoutPortal');
 
-  /* --- 3. GHI NHỚ MÃ SỐ SINH VIÊN (CHỈ LƯU MSSV, KHÔNG LƯU MẬT KHẨU) --- */
-  (function restoreRememberedMssv() {
-    const savedMssv = localStorage.getItem('utc2-remember-mssv');
-    if (savedMssv) {
-      txtMssv.value = savedMssv;
-      chkRememberMssv.checked = true;
+  /* --- 3. GHI NHỚ EMAIL (KHÔNG LƯU MẬT KHẨU) --- */
+  (function restoreRememberedEmail() {
+    const savedEmail = localStorage.getItem('utc2-remember-email');
+    if (savedEmail) {
+      txtEmail.value = savedEmail;
+      chkRememberEmail.checked = true;
     }
   })();
 
@@ -117,7 +117,7 @@
 
     // Xóa thông báo lỗi cũ
     hideBanner(loginAlertBox);
-    clearFieldError(fieldMssv, mssvErrorDesc);
+    clearFieldError(fieldEmail, emailErrorDesc);
     clearFieldError(fieldPassword, pwErrorDesc);
 
     // Tự động focus vào ô đầu tiên
@@ -134,19 +134,13 @@
   if (window.location.hash === '#register') switchScreen('register');
 
   /* --- 5. KIỂM TRA DỮ LIỆU (VALIDATION THỜI GIAN THỰC) --- */
-  function validateMssv(value) {
-    const val = value.trim();
-    if (!val) {
-      return 'Vui lòng nhập mã số sinh viên.';
+  function validateEmail(value) {
+    const email = value.trim();
+    if (!email) {
+      return 'Vui lòng nhập email bạn đã đăng ký.';
     }
-    if (/[^0-9]/.test(val)) {
-      return 'Mã số sinh viên chỉ bao gồm chữ số (0–9).';
-    }
-    if (val.length < 8) {
-      return `Mã số sinh viên gồm từ 8 đến 12 số. Bạn mới nhập ${val.length} số.`;
-    }
-    if (val.length > 12) {
-      return 'Mã số sinh viên không vượt quá 12 số.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Vui lòng nhập địa chỉ email hợp lệ.';
     }
     return '';
   }
@@ -184,17 +178,15 @@
     bannerEl.classList.remove('is-shown', 'shake-anim');
   }
 
-  // Xử lý tự động lọc chỉ nhận chữ số cho MSSV
-  txtMssv.addEventListener('input', function () {
-    this.value = this.value.replace(/[^0-9]/g, '');
-    const err = validateMssv(this.value);
-    if (!err) clearFieldError(fieldMssv, mssvErrorDesc);
+  txtEmail.addEventListener('input', function () {
+    const err = validateEmail(this.value);
+    if (!err) clearFieldError(fieldEmail, emailErrorDesc);
   });
 
-  txtMssv.addEventListener('blur', function () {
-    const err = validateMssv(this.value);
-    if (err) setFieldError(fieldMssv, mssvErrorDesc, err);
-    else clearFieldError(fieldMssv, mssvErrorDesc);
+  txtEmail.addEventListener('blur', function () {
+    const err = validateEmail(this.value);
+    if (err) setFieldError(fieldEmail, emailErrorDesc, err);
+    else clearFieldError(fieldEmail, emailErrorDesc);
   });
 
   txtPassword.addEventListener('input', function () {
@@ -233,17 +225,17 @@
     e.preventDefault();
     hideBanner(loginAlertBox);
 
-    const mssvVal = txtMssv.value.trim();
-    const pwVal   = txtPassword.value;
+    const emailVal = txtEmail.value.trim().toLowerCase();
+    const pwVal    = txtPassword.value;
 
-    const mssvErr = validateMssv(mssvVal);
-    const pwErr   = validatePassword(pwVal);
+    const emailErr = validateEmail(emailVal);
+    const pwErr    = validatePassword(pwVal);
 
-    if (mssvErr) setFieldError(fieldMssv, mssvErrorDesc, mssvErr);
-    if (pwErr)   setFieldError(fieldPassword, pwErrorDesc, pwErr);
+    if (emailErr) setFieldError(fieldEmail, emailErrorDesc, emailErr);
+    if (pwErr)    setFieldError(fieldPassword, pwErrorDesc, pwErr);
 
-    if (mssvErr || pwErr) {
-      if (mssvErr) txtMssv.focus();
+    if (emailErr || pwErr) {
+      if (emailErr) txtEmail.focus();
       else txtPassword.focus();
       return;
     }
@@ -254,15 +246,15 @@
 
     // Giả lập kết nối xác thực
     setTimeout(() => {
-      const userAccount = MOCK_CREDENTIALS[mssvVal];
+      const userAccount = MOCK_CREDENTIALS[emailVal];
 
       if (userAccount && userAccount.password === pwVal) {
         // === ĐĂNG NHẬP THÀNH CÔNG ===
-        // Ghi nhớ MSSV nếu tick checkbox
-        if (chkRememberMssv.checked) {
-          localStorage.setItem('utc2-remember-mssv', mssvVal);
+        // Ghi nhớ email nếu tick checkbox
+        if (chkRememberEmail.checked) {
+          localStorage.setItem('utc2-remember-email', emailVal);
         } else {
-          localStorage.removeItem('utc2-remember-mssv');
+          localStorage.removeItem('utc2-remember-email');
         }
         sessionStorage.setItem('utc2-authenticated', 'true');
         sessionStorage.setItem('utc2-user-name', userAccount.fullName);
@@ -282,7 +274,7 @@
         btnSubmitLogin.disabled = false;
         showBanner(
           loginAlertBox,
-          'Mã số sinh viên hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.',
+          'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.',
           true // hiệu ứng rung
         );
         txtPassword.value = '';
@@ -322,26 +314,27 @@
   }
 
   /* Nút Đăng xuất quay lại màn hình đăng nhập */
-  btnLogoutPortal.addEventListener('click', function () {
-    homeShowcaseView.classList.remove('is-visible');
-    mainLayout.style.display = '';
-    formSide.classList.remove('is-exiting');
-    btnSubmitLogin.classList.remove('is-busy', 'is-completed');
-    btnSubmitLogin.disabled = false;
-    txtPassword.value = '';
-    hideBanner(loginAlertBox);
-    clearFieldError(fieldMssv, mssvErrorDesc);
-    clearFieldError(fieldPassword, pwErrorDesc);
-    switchScreen('login');
+  if (btnLogoutPortal && homeShowcaseView) {
+    btnLogoutPortal.addEventListener('click', function () {
+      homeShowcaseView.classList.remove('is-visible');
+      mainLayout.style.display = '';
+      formSide.classList.remove('is-exiting');
+      btnSubmitLogin.classList.remove('is-busy', 'is-completed');
+      btnSubmitLogin.disabled = false;
+      txtPassword.value = '';
+      hideBanner(loginAlertBox);
+      clearFieldError(fieldEmail, emailErrorDesc);
+      clearFieldError(fieldPassword, pwErrorDesc);
+      switchScreen('login');
 
-    // Reset thanh tiến trình
-    document.getElementById('welcomeMeterFill').style.width = '0%';
-    setTimeout(() => txtMssv.focus(), 150);
-  });
+      document.getElementById('welcomeMeterFill').style.width = '0%';
+      setTimeout(() => txtEmail.focus(), 150);
+    });
+  }
 
   /* --- 7. GIẢ LẬP ĐĂNG NHẬP EMAIL SINH VIÊN (SSO) --- */
   btnSsoLogin.addEventListener('click', function () {
-    alert('Cổng đăng nhập SSO qua tài khoản Microsoft Office 365 (@utc2.edu.vn) đang được tích hợp. Vui lòng đăng nhập bằng MSSV và mật khẩu.');
+    alert('Cổng đăng nhập bằng email sinh viên UTC2 (@utc2.edu.vn) chưa được kết nối với máy chủ.');
   });
 
 })();

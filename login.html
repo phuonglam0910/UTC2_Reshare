@@ -132,38 +132,35 @@
 
           <div class="form-header">
             <h2 class="form-heading">Đăng nhập</h2>
-            <p class="form-caption">Nhập mã số sinh viên UTC2 và mật khẩu để tiếp tục.</p>
+            <p class="form-caption">Người ngoài trường đăng nhập bằng email cá nhân đã đăng ký.</p>
           </div>
 
           <!-- Hộp cảnh báo lỗi rung nhẹ -->
           <div class="form-alert-banner is-error" id="loginAlertBox" role="alert">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span id="loginAlertMsg">Mã số sinh viên hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.</span>
+            <span id="loginAlertMsg">Email hoặc mật khẩu không chính xác. Vui lòng kiểm tra lại.</span>
           </div>
 
           <form id="formLogin" novalidate autocomplete="on">
             
-            <!-- Trường Mã số sinh viên -->
-            <div class="form-field" id="fieldMssv">
-              <label class="field-label" for="txtMssv">Mã số sinh viên</label>
+            <!-- Trường Email cá nhân -->
+            <div class="form-field" id="fieldEmail">
+              <label class="field-label" for="txtEmail">Email đã đăng ký</label>
               <div class="input-wrapper">
                 <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
                 </svg>
                 <input
                   class="field-control"
-                  id="txtMssv"
-                  type="text"
-                  inputmode="numeric"
-                  pattern="[0-9]{8,12}"
-                  maxlength="12"
-                  autocomplete="username"
-                  placeholder="MSSV"
+                  id="txtEmail"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
                   required
-                  aria-describedby="mssvErrorDesc"
+                  aria-describedby="emailErrorDesc"
                 />
               </div>
-              <p class="field-error-text" id="mssvErrorDesc"></p>
+              <p class="field-error-text" id="emailErrorDesc"></p>
             </div>
 
             <!-- Trường Mật khẩu -->
@@ -199,10 +196,10 @@
               <p class="field-error-text" id="pwErrorDesc"></p>
             </div>
 
-            <!-- Ghi nhớ MSSV + Quên mật khẩu -->
+            <!-- Ghi nhớ email + Quên mật khẩu -->
             <div class="form-aux-row">
               <label class="custom-checkbox">
-                <input type="checkbox" id="chkRememberMssv" autocomplete="off" />
+                <input type="checkbox" id="chkRememberEmail" autocomplete="off" />
                 <span class="checkbox-text">Ghi nhớ phiên đăng nhập</span>
               </label>
               <a class="text-link" href="#" id="linkToForgot" role="button">Quên mật khẩu?</a>
@@ -218,17 +215,11 @@
             </button>
           </form>
 
-          <!-- Đăng nhập SSO bằng Email sinh viên UTC2 -->
+          <!-- Đăng nhập bằng Email sinh viên UTC2 -->
           <div class="auth-divider" role="separator">hoặc</div>
           <button class="btn-sso-login" id="btnSsoLogin" type="button">
-            <!-- Icon Microsoft Office 365 / UTC2 Mail -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 4H11V11H4V4Z" fill="#F25022"/>
-              <path d="M13 4H20V11H13V4Z" fill="#7FBA00"/>
-              <path d="M4 13H11V20H4V13Z" fill="#00A4EF"/>
-              <path d="M13 13H20V20H13V13Z" fill="#FFB900"/>
-            </svg>
-            <span>Tiếp tục với email sinh viên UTC2</span>
+            <img src="assets/utc2-logo.jpg" alt="" aria-hidden="true">
+            <span>Đăng nhập bằng email sinh viên UTC2</span>
           </button>
 
           <!-- Chuyển sang Đăng ký -->
@@ -293,7 +284,7 @@
 
           <div class="form-header">
             <h2 class="form-heading">Tạo tài khoản mới</h2>
-            <p class="form-caption">Đăng ký bằng email cá nhân bất kỳ, không cần MSSV hay email UTC2.</p>
+            <p class="form-caption">Dành cho người ngoài trường. Đăng ký bằng email cá nhân và mật khẩu.</p>
           </div>
 
           <form id="formRegister" autocomplete="on">
@@ -338,7 +329,7 @@
             </div>
 
             <button class="btn-primary-action" type="button" aria-describedby="registerNote">Tạo tài khoản</button>
-            <p class="form-note" id="registerNote">Giao diện đăng ký đang được thiết kế; chức năng tạo tài khoản chưa kết nối máy chủ.</p>
+            <p class="form-note" id="registerNote">Chức năng tạo tài khoản sẽ hoạt động sau khi kết nối máy chủ.</p>
           </form>
         </div>
 
