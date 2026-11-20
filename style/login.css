@@ -361,12 +361,17 @@ html, body {
   width: 100%;
   max-width: 400px;
   position: relative;
+  overflow: hidden;
+  transition: height 0.48s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Các màn hình trượt mượt */
 .screen-panel {
   width: 100%;
-  transition: transform 0.4s var(--transition-normal), opacity 0.35s ease;
+  transition:
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.32s ease,
+    filter 0.32s ease;
   will-change: transform, opacity;
 }
 
@@ -374,18 +379,42 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateX(-108%);
+  transform: translateX(-38%) scale(0.985);
   opacity: 0;
   pointer-events: none;
+  filter: blur(3px);
 }
 
 .screen-panel.is-hidden-right {
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateX(108%);
+  transform: translateX(38%) scale(0.985);
   opacity: 0;
   pointer-events: none;
+  filter: blur(3px);
+}
+
+.screen-panel.is-leaving-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(-18%) scale(0.985);
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(3px);
+  z-index: 1;
+}
+
+.screen-panel.is-leaving-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateX(18%) scale(0.985);
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(3px);
+  z-index: 1;
 }
 
 .screen-panel.is-active {
@@ -393,6 +422,8 @@ html, body {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
+  filter: blur(0);
+  z-index: 2;
 }
 
 /* Typography Tiêu đề form */
@@ -796,6 +827,42 @@ html, body {
 .back-action-link svg {
   width: 18px;
   height: 18px;
+}
+
+/* Điều hướng về trang chủ trên màn hình đăng nhập */
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 18px;
+  color: var(--text-sub);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.back-home-link svg {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--transition-fast);
+}
+
+.back-home-link:hover {
+  color: var(--primary-dark);
+  transform: translateX(-2px);
+}
+
+.back-home-link:hover svg {
+  transform: translateX(-2px);
+}
+
+.back-home-link:focus-visible {
+  outline: 2px solid var(--primary-hover);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 /* ==========================================================

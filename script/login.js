@@ -55,6 +55,7 @@
 
   /* --- 4. ĐIỀU HƯỚNG TRƯỢT MÀN HÌNH (Đăng nhập / Quên MK / Đăng ký) --- */
   let activeScreenName = 'login'; // 'login' | 'forgot' | 'register'
+  let screenTransitionTimer = null;
 
   function switchScreen(targetName) {
     if (targetName === activeScreenName) return;
@@ -65,28 +66,54 @@
       register: screenRegister
     };
 
-    const hierarchy = ['login', 'forgot', 'register'];
-    const currentIdx = hierarchy.indexOf(activeScreenName);
-    const targetIdx  = hierarchy.indexOf(targetName);
-    const movingRight = targetIdx > currentIdx;
-
     const fromEl = screens[activeScreenName];
     const toEl   = screens[targetName];
+    const hierarchy = ['login', 'forgot', 'register'];
+    const movingRight =
+      hierarchy.indexOf(targetName) > hierarchy.indexOf(activeScreenName);
+    const oldHeight = formSide.querySelector('.form-stage').offsetHeight;
 
-    // Ẩn màn hình cũ
-    fromEl.classList.remove('is-active');
-    fromEl.classList.add(movingRight ? 'is-hidden-left' : 'is-hidden-right');
+    if (screenTransitionTimer) {
+      window.clearTimeout(screenTransitionTimer);
+    }
 
-    // Chuẩn bị màn hình mới
-    toEl.classList.remove('is-hidden-left', 'is-hidden-right');
+    // Giữ chiều cao hiện tại để khung form không bị nhảy giật.
+    const stage = formSide.querySelector('.form-stage');
+    stage.style.height = `${oldHeight}px`;
+
+    // Chuẩn bị màn hình đích ở mép đối diện.
+    toEl.classList.remove(
+      'is-active',
+      'is-hidden-left',
+      'is-hidden-right',
+      'is-leaving-left',
+      'is-leaving-right'
+    );
     toEl.classList.add(movingRight ? 'is-hidden-right' : 'is-hidden-left');
+    toEl.setAttribute('aria-hidden', 'true');
 
-    // Kích hoạt animation
-    void toEl.offsetWidth; // ép reflow
-    toEl.classList.remove('is-hidden-left', 'is-hidden-right');
-    toEl.classList.add('is-active');
+    // Cho màn hình cũ rời chậm theo chiều ngược lại.
+    fromEl.classList.remove('is-active');
+    fromEl.classList.add(movingRight ? 'is-leaving-left' : 'is-leaving-right');
+    fromEl.setAttribute('aria-hidden', 'true');
 
-    activeScreenName = targetName;
+    // Kích hoạt cặp chuyển cảnh cùng một frame.
+    requestAnimationFrame(() => {
+      void toEl.offsetWidth;
+      toEl.classList.remove('is-hidden-left', 'is-hidden-right');
+      toEl.classList.add('is-active');
+      toEl.setAttribute('aria-hidden', 'false');
+
+      const targetHeight = toEl.offsetHeight;
+      stage.style.height = `${targetHeight}px`;
+      activeScreenName = targetName;
+    });
+
+    screenTransitionTimer = window.setTimeout(() => {
+      fromEl.classList.remove('is-leaving-left', 'is-leaving-right');
+      fromEl.classList.add(movingRight ? 'is-hidden-left' : 'is-hidden-right');
+      stage.style.height = '';
+    }, 500);
 
     // Xóa thông báo lỗi cũ
     hideBanner(loginAlertBox);
@@ -237,6 +264,8 @@
         } else {
           localStorage.removeItem('utc2-remember-mssv');
         }
+        sessionStorage.setItem('utc2-authenticated', 'true');
+        sessionStorage.setItem('utc2-user-name', userAccount.fullName);
 
         // Chuyển nút sang tick xanh vẽ dần
         btnSubmitLogin.classList.remove('is-busy');
@@ -284,12 +313,11 @@
       circleExpandOverlay.classList.add('is-active');
     });
 
-    // Dừng tại trang giữ chỗ Trang Chủ
+    // Chuyển tới trang chủ sau hiệu ứng hoàn tất
     setTimeout(() => {
-      mainLayout.style.display = 'none';
       circleExpandOverlay.classList.remove('is-active');
       circleExpandOverlay.setAttribute('aria-hidden', 'true');
-      homeShowcaseView.classList.add('is-visible');
+      window.location.assign('index.html');
     }, 2200);
   }
 
