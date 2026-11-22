@@ -32,9 +32,9 @@
 
   // Chuyển màn hình
   const linkToForgot       = document.getElementById('linkToForgot');
-  const linkToRegister     = document.getElementById('linkToRegister');
   const btnBackFromForgot   = document.getElementById('btnBackFromForgot');
-  const btnBackFromRegister = document.getElementById('btnBackFromRegister');
+  const authModeSwitch     = document.getElementById('authModeSwitch');
+  const authModeTabs       = document.querySelectorAll('[data-auth-tab]');
 
   // Chuyển cảnh & Trang chủ
   const formSide           = document.getElementById('formSide');
@@ -115,6 +115,22 @@
       stage.style.height = '';
     }, 500);
 
+    authModeTabs.forEach((tab) => {
+      const isActive = tab.dataset.authTab === targetName;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Cập nhật vị trí khung tròn trượt (Glider indicator)
+    if (authModeSwitch) {
+      if (targetName === 'forgot') {
+        authModeSwitch.classList.add('is-hidden');
+      } else {
+        authModeSwitch.classList.remove('is-hidden');
+        authModeSwitch.setAttribute('data-active', targetName);
+      }
+    }
+
     // Xóa thông báo lỗi cũ
     hideBanner(loginAlertBox);
     clearFieldError(fieldEmail, emailErrorDesc);
@@ -128,9 +144,12 @@
   }
 
   linkToForgot.addEventListener('click', (e) => { e.preventDefault(); switchScreen('forgot'); });
-  linkToRegister.addEventListener('click', (e) => { e.preventDefault(); switchScreen('register'); });
   btnBackFromForgot.addEventListener('click', (e) => { e.preventDefault(); switchScreen('login'); });
-  btnBackFromRegister.addEventListener('click', (e) => { e.preventDefault(); switchScreen('login'); });
+  authModeTabs.forEach((tab) => {
+    tab.addEventListener('click', function () {
+      switchScreen(this.dataset.authTab);
+    });
+  });
   if (window.location.hash === '#register') switchScreen('register');
 
   /* --- 5. KIỂM TRA DỮ LIỆU (VALIDATION THỜI GIAN THỰC) --- */
