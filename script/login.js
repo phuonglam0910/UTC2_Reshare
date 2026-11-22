@@ -58,7 +58,7 @@
   let screenTransitionTimer = null;
 
   function switchScreen(targetName) {
-    if (targetName === activeScreenName) return;
+    if (targetName === activeScreenName || screenTransitionTimer !== null) return;
 
     const screens = {
       login: screenLogin,
@@ -72,10 +72,6 @@
     const movingRight =
       hierarchy.indexOf(targetName) > hierarchy.indexOf(activeScreenName);
     const oldHeight = formSide.querySelector('.form-stage').offsetHeight;
-
-    if (screenTransitionTimer) {
-      window.clearTimeout(screenTransitionTimer);
-    }
 
     // Giữ chiều cao hiện tại để khung form không bị nhảy giật.
     const stage = formSide.querySelector('.form-stage');
@@ -113,6 +109,7 @@
       fromEl.classList.remove('is-leaving-left', 'is-leaving-right');
       fromEl.classList.add(movingRight ? 'is-hidden-left' : 'is-hidden-right');
       stage.style.height = '';
+      screenTransitionTimer = null;
     }, 500);
 
     authModeTabs.forEach((tab) => {
