@@ -5,44 +5,50 @@
   const MOCK_CREDENTIALS = {
     'nguyenvanan@gmail.com': {
       password: 'utc2@123',
-      fullName: 'Nguyễn Văn An'
+      fullName: 'Nguyễn Văn An',
+      role: 'student'
+    },
+    'admin@st.utc2.edu.vn': {
+      password: 'admin123**',
+      fullName: 'Quản trị viên',
+      role: 'admin'
     }
   };
 
   /* --- 2. TRUY XUẤT CÁC PHẦN TỬ DOM --- */
   // Các màn hình
-  const screenLogin        = document.getElementById('screenLogin');
-  const screenForgot       = document.getElementById('screenForgot');
-  const screenRegister     = document.getElementById('screenRegister');
+  const screenLogin = document.getElementById('screenLogin');
+  const screenForgot = document.getElementById('screenForgot');
+  const screenRegister = document.getElementById('screenRegister');
 
   // Form Đăng nhập
-  const formLogin          = document.getElementById('formLogin');
-  const txtEmail           = document.getElementById('txtEmail');
-  const txtPassword        = document.getElementById('txtPassword');
-  const fieldEmail         = document.getElementById('fieldEmail');
-  const fieldPassword      = document.getElementById('fieldPassword');
-  const emailErrorDesc     = document.getElementById('emailErrorDesc');
-  const pwErrorDesc        = document.getElementById('pwErrorDesc');
-  const loginAlertBox      = document.getElementById('loginAlertBox');
-  const btnSubmitLogin     = document.getElementById('btnSubmitLogin');
-  const btnTogglePw        = document.getElementById('btnTogglePw');
-  const capsIndicator      = document.getElementById('capsIndicator');
-  const chkRememberEmail   = document.getElementById('chkRememberEmail');
-  const btnSsoLogin        = document.getElementById('btnSsoLogin');
+  const formLogin = document.getElementById('formLogin');
+  const txtEmail = document.getElementById('txtEmail');
+  const txtPassword = document.getElementById('txtPassword');
+  const fieldEmail = document.getElementById('fieldEmail');
+  const fieldPassword = document.getElementById('fieldPassword');
+  const emailErrorDesc = document.getElementById('emailErrorDesc');
+  const pwErrorDesc = document.getElementById('pwErrorDesc');
+  const loginAlertBox = document.getElementById('loginAlertBox');
+  const btnSubmitLogin = document.getElementById('btnSubmitLogin');
+  const btnTogglePw = document.getElementById('btnTogglePw');
+  const capsIndicator = document.getElementById('capsIndicator');
+  const chkRememberEmail = document.getElementById('chkRememberEmail');
+  const btnSsoLogin = document.getElementById('btnSsoLogin');
 
   // Chuyển màn hình
-  const linkToForgot       = document.getElementById('linkToForgot');
-  const btnBackFromForgot   = document.getElementById('btnBackFromForgot');
-  const authModeSwitch     = document.getElementById('authModeSwitch');
-  const authModeTabs       = document.querySelectorAll('[data-auth-tab]');
+  const linkToForgot = document.getElementById('linkToForgot');
+  const btnBackFromForgot = document.getElementById('btnBackFromForgot');
+  const authModeSwitch = document.getElementById('authModeSwitch');
+  const authModeTabs = document.querySelectorAll('[data-auth-tab]');
 
   // Chuyển cảnh & Trang chủ
-  const formSide           = document.getElementById('formSide');
-  const circleExpandOverlay= document.getElementById('circleExpandOverlay');
-  const welcomeUserGreeting= document.getElementById('welcomeUserGreeting');
-  const mainLayout         = document.getElementById('mainLayout');
-  const homeShowcaseView   = document.getElementById('homeShowcaseView');
-  const btnLogoutPortal    = document.getElementById('btnLogoutPortal');
+  const formSide = document.getElementById('formSide');
+  const circleExpandOverlay = document.getElementById('circleExpandOverlay');
+  const welcomeUserGreeting = document.getElementById('welcomeUserGreeting');
+  const mainLayout = document.getElementById('mainLayout');
+  const homeShowcaseView = document.getElementById('homeShowcaseView');
+  const btnLogoutPortal = document.getElementById('btnLogoutPortal');
 
   /* --- 3. GHI NHỚ EMAIL (KHÔNG LƯU MẬT KHẨU) --- */
   (function restoreRememberedEmail() {
@@ -67,7 +73,7 @@
     };
 
     const fromEl = screens[activeScreenName];
-    const toEl   = screens[targetName];
+    const toEl = screens[targetName];
     const hierarchy = ['login', 'forgot', 'register'];
     const movingRight =
       hierarchy.indexOf(targetName) > hierarchy.indexOf(activeScreenName);
@@ -242,13 +248,13 @@
     hideBanner(loginAlertBox);
 
     const emailVal = txtEmail.value.trim().toLowerCase();
-    const pwVal    = txtPassword.value;
+    const pwVal = txtPassword.value;
 
     const emailErr = validateEmail(emailVal);
-    const pwErr    = validatePassword(pwVal);
+    const pwErr = validatePassword(pwVal);
 
     if (emailErr) setFieldError(fieldEmail, emailErrorDesc, emailErr);
-    if (pwErr)    setFieldError(fieldPassword, pwErrorDesc, pwErr);
+    if (pwErr) setFieldError(fieldPassword, pwErrorDesc, pwErr);
 
     if (emailErr || pwErr) {
       if (emailErr) txtEmail.focus();
@@ -274,6 +280,16 @@
         }
         sessionStorage.setItem('utc2-authenticated', 'true');
         sessionStorage.setItem('utc2-user-name', userAccount.fullName);
+        if (userAccount.role === 'admin') {
+          localStorage.setItem('utc2_currentUser', JSON.stringify({
+            id: 'admin',
+            email: emailVal,
+            fullName: userAccount.fullName,
+            role: 'admin'
+          }));
+        } else {
+          localStorage.removeItem('utc2_currentUser');
+        }
 
         // Chuyển nút sang tick xanh vẽ dần
         btnSubmitLogin.classList.remove('is-busy');
@@ -281,7 +297,7 @@
 
         // Kích hoạt hiệu ứng Circle Reveal từ vị trí nút
         setTimeout(() => {
-          triggerCircleReveal(userAccount.fullName);
+          triggerCircleReveal(userAccount.fullName, userAccount.role === 'admin' ? 'dashboard.html' : 'index.html');
         }, 550);
 
       } else {
@@ -300,7 +316,7 @@
   });
 
   /* Hiệu ứng Circle Reveal phủ màn hình */
-  function triggerCircleReveal(userName) {
+  function triggerCircleReveal(userName, destination) {
     const btnRect = btnSubmitLogin.getBoundingClientRect();
     const centerX = btnRect.left + btnRect.width / 2;
     const centerY = btnRect.top + btnRect.height / 2;
@@ -325,7 +341,7 @@
     setTimeout(() => {
       circleExpandOverlay.classList.remove('is-active');
       circleExpandOverlay.setAttribute('aria-hidden', 'true');
-      window.location.assign('index.html');
+      window.location.assign(destination);
     }, 2200);
   }
 
