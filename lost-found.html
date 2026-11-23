@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tìm đồ thất lạc và đăng tin báo mất hoặc nhặt được tại UTC2.">
+  <meta name="theme-color" content="#f5faff">
+  <title>Tìm đồ thất lạc | Reshare UTC2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/lost-found.css">
+</head>
+<body>
+  <a class="lf-skip-link" href="#lf-main">Bỏ qua điều hướng</a>
+
+  <header class="lf-header">
+    <div class="lf-container lf-header-inner">
+      <a class="lf-brand" href="index.html" aria-label="Reshare UTC2 - Trang chủ">
+        <img src="assets/reshare-mark.png" alt="">
+        <span><strong>Reshare <b>UTC2</b></strong><small>Chia sẻ để hành trình thêm xanh</small></span>
+      </a>
+      <nav class="lf-navigation" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a class="is-current" href="lost-found.html" aria-current="page">Tin thất lạc</a>
+        <a href="login.html">Đăng nhập</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="lf-main">
+    <section class="lf-hero">
+      <div class="lf-container lf-hero-inner">
+        <div>
+          <span class="lf-eyebrow">Kết nối cộng đồng UTC2</span>
+          <h1>Tìm lại món đồ<br><span>thất lạc của bạn.</span></h1>
+          <p>Đăng tin báo mất hoặc nhặt được để mọi người trong trường cùng hỗ trợ tìm chủ nhân.</p>
+        </div>
+        <div class="lf-hero-actions">
+          <button class="lf-button lf-button-primary" id="lf-open-form" type="button">＋ Đăng tin mới</button>
+          <span>Chia sẻ thông tin liên hệ để kết nối nhanh hơn.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="lf-container lf-content" aria-labelledby="lf-list-title">
+      <div class="lf-section-heading">
+        <div>
+          <span class="lf-eyebrow">Bảng tin cộng đồng</span>
+          <h2 id="lf-list-title">Tin báo mất & nhặt được</h2>
+        </div>
+        <p id="lf-result-count" aria-live="polite"></p>
+      </div>
+
+      <div class="lf-toolbar">
+        <label class="lf-search">
+          <span class="lf-visually-hidden">Tìm theo tên đồ vật</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="lf-search" type="search" placeholder="Tìm theo tên đồ vật..." autocomplete="off">
+        </label>
+        <label>
+          <span class="lf-visually-hidden">Lọc theo loại tin</span>
+          <select id="lf-type-filter">
+            <option value="all">Tất cả loại tin</option>
+            <option value="lost">Báo mất</option>
+            <option value="found">Nhặt được</option>
+          </select>
+        </label>
+        <label>
+          <span class="lf-visually-hidden">Lọc theo trạng thái</span>
+          <select id="lf-status-filter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="open">Đang tìm / tìm chủ nhân</option>
+            <option value="resolved">Đã trao trả</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="lf-storage-note">Tin đăng được lưu trên trình duyệt của thiết bị này.</p>
+      <p class="lf-error" id="lf-storage-error" role="alert" hidden></p>
+      <div class="lf-list" id="lf-list" aria-live="polite"></div>
+      <div class="lf-empty" id="lf-empty" hidden>
+        <span aria-hidden="true">⌕</span>
+        <h3 id="lf-empty-title">Chưa có tin phù hợp</h3>
+        <p id="lf-empty-description">Hãy thử từ khóa khác hoặc đăng tin để cộng đồng cùng hỗ trợ.</p>
+        <button class="lf-button lf-button-outline" id="lf-empty-create" type="button">Đăng tin đầu tiên</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="lf-footer">
+    <div class="lf-container">
+      <a href="index.html">← Trở về trang chủ Reshare UTC2</a>
+      <span>© <span id="lf-year"></span> Reshare UTC2</span>
+    </div>
+  </footer>
+
+  <dialog class="lf-dialog" id="lf-form-dialog" aria-labelledby="lf-form-title">
+    <form class="lf-dialog-card" id="lf-report-form">
+      <div class="lf-dialog-heading">
+        <div><span class="lf-eyebrow">Chia sẻ với cộng đồng</span><h2 id="lf-form-title">Đăng tin thất lạc</h2></div>
+        <button class="lf-close" type="button" data-close-dialog aria-label="Đóng">×</button>
+      </div>
+      <label class="lf-field">Loại tin
+        <select name="type" required>
+          <option value="lost">Tôi bị mất đồ</option>
+          <option value="found">Tôi nhặt được đồ</option>
+        </select>
+      </label>
+      <label class="lf-field">Tên đồ vật
+        <input name="itemName" type="text" maxlength="100" required placeholder="Ví dụ: Bình nước màu xanh">
+      </label>
+      <label class="lf-field">Mô tả chi tiết
+        <textarea name="description" rows="3" maxlength="600" required placeholder="Đặc điểm nhận dạng, thời gian hoặc thông tin hữu ích..."></textarea>
+      </label>
+      <div class="lf-field-row">
+        <label class="lf-field">Địa điểm
+          <input name="location" type="text" maxlength="120" required placeholder="Ví dụ: Thư viện UTC2">
+        </label>
+        <label class="lf-field">Ngày xảy ra / nhặt được
+          <input name="date" type="date" required>
+        </label>
+      </div>
+      <label class="lf-field">Tên người liên hệ
+        <input name="contactName" type="text" maxlength="80" required placeholder="Tên của bạn">
+      </label>
+      <div class="lf-field-row">
+        <label class="lf-field">Số điện thoại
+          <input name="phone" type="tel" maxlength="24" autocomplete="tel" placeholder="Không bắt buộc">
+        </label>
+        <label class="lf-field">Email
+          <input name="email" type="email" maxlength="120" autocomplete="email" placeholder="Không bắt buộc">
+        </label>
+      </div>
+      <p class="lf-form-hint">Cung cấp ít nhất số điện thoại hoặc email để mọi người có thể liên hệ.</p>
+      <p class="lf-error" id="lf-form-error" role="alert" hidden></p>
+      <div class="lf-dialog-actions">
+        <button class="lf-button lf-button-outline" type="button" data-close-dialog>Hủy</button>
+        <button class="lf-button lf-button-primary" type="submit">Đăng tin</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="lf-dialog" id="lf-detail-dialog" aria-labelledby="lf-detail-title">
+    <div class="lf-dialog-card">
+      <div class="lf-dialog-heading">
+        <div><span class="lf-eyebrow" id="lf-detail-type"></span><h2 id="lf-detail-title"></h2></div>
+        <button class="lf-close" type="button" data-close-dialog aria-label="Đóng">×</button>
+      </div>
+      <p class="lf-detail-status" id="lf-detail-status"></p>
+      <p class="lf-detail-description" id="lf-detail-description"></p>
+      <dl class="lf-detail-list">
+        <div><dt>Địa điểm</dt><dd id="lf-detail-location"></dd></div>
+        <div><dt>Thời gian</dt><dd id="lf-detail-date"></dd></div>
+        <div><dt>Người liên hệ</dt><dd id="lf-detail-contact"></dd></div>
+      </dl>
+      <div class="lf-contact-actions" id="lf-contact-actions"></div>
+      <p class="lf-error" id="lf-detail-error" role="alert" hidden></p>
+      <div class="lf-dialog-actions lf-detail-actions">
+        <button class="lf-button lf-button-outline" id="lf-toggle-status" type="button"></button>
+        <button class="lf-button lf-button-primary" type="button" data-close-dialog>Đóng</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script/lost-found.js"></script>
+</body>
+</html>

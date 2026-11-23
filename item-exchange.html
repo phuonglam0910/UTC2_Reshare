@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Đăng và tìm tin trao đổi đồ cũ trong cộng đồng sinh viên UTC2.">
+  <meta name="theme-color" content="#f5faff">
+  <title>Trao đổi đồ cũ | Reshare UTC2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/item-exchange.css">
+</head>
+<body>
+  <a class="ex-skip-link" href="#ex-main">Bỏ qua điều hướng</a>
+
+  <header class="ex-header">
+    <div class="ex-container ex-header-inner">
+      <a class="ex-brand" href="index.html" aria-label="Reshare UTC2 - Trang chủ">
+        <img src="assets/reshare-mark.png" alt="">
+        <span><strong>Reshare <b>UTC2</b></strong><small>Chia sẻ để hành trình thêm xanh</small></span>
+      </a>
+      <nav class="ex-navigation" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a class="is-current" href="item-exchange.html" aria-current="page">Trao đổi đồ cũ</a>
+        <a href="lost-found.html">Tin thất lạc</a>
+        <a href="login.html">Đăng nhập</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="ex-main">
+    <section class="ex-hero">
+      <div class="ex-container ex-hero-inner">
+        <div>
+          <span class="ex-eyebrow">Chia sẻ trong cộng đồng UTC2</span>
+          <h1>Đồ bạn không còn cần,<br><span>có thể là điều người khác tìm.</span></h1>
+          <p>Đăng món đồ muốn trao đổi, cho biết bạn đang cần gì và kết nối trực tiếp với sinh viên quan tâm.</p>
+        </div>
+        <div class="ex-hero-actions">
+          <button class="ex-button ex-button-primary" id="ex-open-form" type="button">＋ Đăng tin trao đổi</button>
+          <span>Trao đổi trực tiếp, không qua trung gian.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ex-container ex-content" aria-labelledby="ex-list-title">
+      <div class="ex-section-heading">
+        <div>
+          <span class="ex-eyebrow">Góc trao đổi</span>
+          <h2 id="ex-list-title">Món đồ đang tìm chủ mới</h2>
+        </div>
+        <p id="ex-result-count" aria-live="polite"></p>
+      </div>
+
+      <div class="ex-toolbar">
+        <label class="ex-search">
+          <span class="ex-visually-hidden">Tìm đồ đang trao đổi</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="ex-search" type="search" placeholder="Tên món đồ hoặc món muốn nhận..." autocomplete="off">
+        </label>
+        <label>
+          <span class="ex-visually-hidden">Lọc theo danh mục</span>
+          <select id="ex-category-filter">
+            <option value="all">Tất cả danh mục</option>
+            <option value="sach">Sách & tài liệu</option>
+            <option value="hoc-tap">Dụng cụ học tập</option>
+            <option value="ca-nhan">Đồ dùng cá nhân</option>
+            <option value="khac">Khác</option>
+          </select>
+        </label>
+        <label>
+          <span class="ex-visually-hidden">Lọc theo trạng thái</span>
+          <select id="ex-status-filter">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="open">Đang trao đổi</option>
+            <option value="completed">Đã trao đổi</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="ex-storage-note">Tin đăng được lưu trên trình duyệt của thiết bị này.</p>
+      <p class="ex-error" id="ex-storage-error" role="alert" hidden></p>
+      <div class="ex-list" id="ex-list" aria-live="polite"></div>
+      <div class="ex-empty" id="ex-empty" hidden>
+        <span aria-hidden="true">↔</span>
+        <h3 id="ex-empty-title">Chưa có tin trao đổi</h3>
+        <p id="ex-empty-description">Đăng tin đầu tiên để món đồ hữu ích có thêm hành trình mới.</p>
+        <button class="ex-button ex-button-outline" id="ex-empty-create" type="button">Đăng tin đầu tiên</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ex-footer">
+    <div class="ex-container">
+      <a href="index.html">← Trở về trang chủ Reshare UTC2</a>
+      <span>© <span id="ex-year"></span> Reshare UTC2</span>
+    </div>
+  </footer>
+
+  <dialog class="ex-dialog" id="ex-form-dialog" aria-labelledby="ex-form-title">
+    <form class="ex-dialog-card" id="ex-listing-form">
+      <div class="ex-dialog-heading">
+        <div><span class="ex-eyebrow">Trao đổi có trách nhiệm</span><h2 id="ex-form-title">Đăng tin trao đổi đồ cũ</h2></div>
+        <button class="ex-close" type="button" data-close-dialog aria-label="Đóng">×</button>
+      </div>
+      <label class="ex-field">Tên món đồ bạn muốn trao đổi
+        <input name="itemName" type="text" maxlength="100" required placeholder="Ví dụ: Giáo trình còn tốt">
+      </label>
+      <label class="ex-field">Bạn muốn nhận món gì?
+        <input name="wantedItem" type="text" maxlength="120" required placeholder="Ví dụ: Sách Cơ học kết cấu hoặc dụng cụ học tập">
+      </label>
+      <div class="ex-field-row">
+        <label class="ex-field">Danh mục
+          <select name="category" required>
+            <option value="sach">Sách & tài liệu</option>
+            <option value="hoc-tap">Dụng cụ học tập</option>
+            <option value="ca-nhan">Đồ dùng cá nhân</option>
+            <option value="khac">Khác</option>
+          </select>
+        </label>
+        <label class="ex-field">Tình trạng món đồ
+          <select name="condition" required>
+            <option value="Mới">Mới</option>
+            <option value="Còn rất tốt">Còn rất tốt</option>
+            <option value="Đang sử dụng tốt">Đang sử dụng tốt</option>
+            <option value="Có dấu hiệu sử dụng">Có dấu hiệu sử dụng</option>
+          </select>
+        </label>
+      </div>
+      <label class="ex-field">Mô tả thêm
+        <textarea name="description" rows="3" maxlength="600" placeholder="Mô tả đặc điểm, tình trạng hoặc cách trao đổi mong muốn..."></textarea>
+      </label>
+      <label class="ex-field">Địa điểm trao đổi thuận tiện
+        <input name="location" type="text" maxlength="120" required placeholder="Ví dụ: Khuôn viên UTC2">
+      </label>
+      <label class="ex-field">Tên người đăng
+        <input name="contactName" type="text" maxlength="80" required placeholder="Tên của bạn">
+      </label>
+      <div class="ex-field-row">
+        <label class="ex-field">Số điện thoại
+          <input name="phone" type="tel" maxlength="24" autocomplete="tel" placeholder="Không bắt buộc">
+        </label>
+        <label class="ex-field">Email
+          <input name="email" type="email" maxlength="120" autocomplete="email" placeholder="Không bắt buộc">
+        </label>
+      </div>
+      <p class="ex-form-hint">Cung cấp ít nhất số điện thoại hoặc email để người quan tâm có thể liên hệ.</p>
+      <p class="ex-error" id="ex-form-error" role="alert" hidden></p>
+      <div class="ex-dialog-actions">
+        <button class="ex-button ex-button-outline" type="button" data-close-dialog>Hủy</button>
+        <button class="ex-button ex-button-primary" type="submit">Đăng tin</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="ex-dialog" id="ex-detail-dialog" aria-labelledby="ex-detail-title">
+    <div class="ex-dialog-card">
+      <div class="ex-dialog-heading">
+        <div><span class="ex-eyebrow" id="ex-detail-category"></span><h2 id="ex-detail-title"></h2></div>
+        <button class="ex-close" type="button" data-close-dialog aria-label="Đóng">×</button>
+      </div>
+      <p class="ex-detail-status" id="ex-detail-status"></p>
+      <dl class="ex-detail-list">
+        <div><dt>Tình trạng</dt><dd id="ex-detail-condition"></dd></div>
+        <div><dt>Người đăng muốn nhận</dt><dd id="ex-detail-wanted"></dd></div>
+        <div><dt>Mô tả</dt><dd id="ex-detail-description"></dd></div>
+        <div><dt>Địa điểm</dt><dd id="ex-detail-location"></dd></div>
+        <div><dt>Người liên hệ</dt><dd id="ex-detail-contact"></dd></div>
+      </dl>
+      <div class="ex-contact-actions" id="ex-contact-actions"></div>
+      <p class="ex-error" id="ex-detail-error" role="alert" hidden></p>
+      <div class="ex-dialog-actions ex-detail-actions">
+        <button class="ex-button ex-button-outline" id="ex-toggle-status" type="button"></button>
+        <button class="ex-button ex-button-primary" type="button" data-close-dialog>Đóng</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script/item-exchange.js"></script>
+</body>
+</html>
