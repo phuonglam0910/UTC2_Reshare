@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quản lý tài khoản | Quản trị UTC2 RESHARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/admin.css">
+  <link rel="stylesheet" href="style/users.css">
+</head>
+<body data-page="users" data-title="Quản lý tài khoản">
+  <a class="skip-link" href="#content">Bỏ qua điều hướng</a>
+
+  <div class="shell" id="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Thanh điều hướng"></aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content" id="content" tabindex="-1">
+        <div class="toolbar" role="search">
+          <input class="field field--search" id="search" type="search" placeholder="Tìm theo tên, mã sinh viên hoặc email" aria-label="Tìm kiếm tài khoản" autocomplete="off">
+          <select class="field" id="filter-role" aria-label="Lọc theo vai trò">
+            <option value="all">Tất cả vai trò</option>
+            <option value="student">Sinh viên UTC2</option>
+            <option value="guest">Khách</option>
+            <option value="admin">Quản trị viên</option>
+          </select>
+          <select class="field" id="filter-status" aria-label="Lọc theo trạng thái">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="active">Hoạt động</option>
+            <option value="locked">Đã khóa</option>
+          </select>
+          <button type="button" class="btn btn--ghost" id="reset-filters">Xóa bộ lọc</button>
+          <span class="toolbar__count" id="result-count" aria-live="polite"></span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="col-num">STT</th>
+                <th>Mã sinh viên</th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="users-body"></tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="script/admin.js"></script>
+  <script src="script/users.js"></script>
+</body>
+</html>

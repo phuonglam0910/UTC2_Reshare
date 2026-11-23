@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tổng quan | Quản trị UTC2 RESHARE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/admin.css">
+  <link rel="stylesheet" href="style/dashboard.css">
+</head>
+<body data-page="dashboard" data-title="Tổng quan">
+  <a class="skip-link" href="#content">Bỏ qua điều hướng</a>
+
+  <div class="shell" id="shell">
+    <!-- Sidebar và Header được admin.js dựng tự động -->
+    <aside class="sidebar" id="sidebar" aria-label="Thanh điều hướng"></aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content" id="content" tabindex="-1">
+        <section class="stat-grid" id="stat-cards" aria-label="Thống kê nhanh"></section>
+
+        <div class="dash-grid">
+          <section class="card span-2" aria-labelledby="status-title">
+            <div class="card__head">
+              <h2 class="card__title" id="status-title">Tin đăng theo trạng thái</h2>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut" id="status-donut" role="img" aria-label="Biểu đồ tròn trạng thái tin đăng">
+                <div class="donut__center"><strong id="donut-total">0</strong><span>tin</span></div>
+              </div>
+              <ul class="legend" id="status-legend" aria-label="Chú giải trạng thái tin đăng"></ul>
+            </div>
+          </section>
+
+          <section class="card" aria-labelledby="type-title">
+            <h2 class="card__title" id="type-title">Số tin theo loại</h2>
+            <ul class="bars" id="type-chart"></ul>
+          </section>
+
+          <section class="card" aria-labelledby="pending-title">
+            <div class="card__head">
+              <h2 class="card__title" id="pending-title">Tin chờ duyệt mới nhất</h2>
+              <a class="btn btn--ghost" href="posts.html?status=pending">Xem tất cả</a>
+            </div>
+            <ul class="pending-list" id="pending-list"></ul>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="script/admin.js"></script>
+  <script src="script/dashboard.js"></script>
+</body>
+</html>
