@@ -5,14 +5,19 @@
 /* ---------- Thẻ thống kê ---------- */
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    "total status"
+    "users exchange"
+    "pending lost";
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .stat {
-  display: flex; align-items: flex-start; gap: 14px;
-  grid-column: span 2;
-  padding: 18px;
+  display: flex; align-items: center; gap: 14px;
+  grid-column: auto;
+  min-height: 154px;
+  padding: 20px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -21,7 +26,13 @@
   color: inherit;
 }
 .stat--clickable { cursor: pointer; }
-.stat--featured { grid-column: span 3; min-height: 132px; align-items: center; padding: 22px; border-color: #ead9a6; box-shadow: 0 5px 18px rgba(16, 45, 73, .055); }
+.stat--featured { grid-column: auto; min-height: 154px; padding: 20px; border-color: #ead9a6; box-shadow: 0 5px 18px rgba(16, 45, 73, .055); }
+.stat--total { grid-area: total; }
+.stat--featured.stat--total { min-height: 294px; }
+.stat--alert { grid-area: pending; }
+.stat--users { grid-area: users; }
+.stat--exchange { grid-area: exchange; }
+.stat--lost { grid-area: lost; }
 .stat:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(16, 45, 73, .09); }
 .stat__icon {
   display: grid; place-items: center; flex: none;
@@ -46,7 +57,16 @@ a.stat:hover { border-color: var(--brand); }
 
 /* ---------- Lưới biểu đồ ---------- */
 .dash-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
-.dash-grid .span-2 { grid-column: 1 / -1; }
+.status-card {
+  grid-area: status;
+  display: flex;
+  flex-direction: column;
+  min-height: 294px;
+}
+.status-card .donut-wrap { flex: 1; gap: 12px; min-height: 220px; }
+.status-card .donut { width: clamp(140px, 42%, 180px); height: auto; aspect-ratio: 1; }
+.status-card .donut::before { width: 64%; height: auto; aspect-ratio: 1; }
+.status-card #status-legend { width: clamp(170px, 45%, 200px); min-width: 0; }
 
 /* Biểu đồ cột ngang (thuần CSS, tính từ dữ liệu) */
 .bars { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
@@ -91,13 +111,20 @@ a.stat:hover { border-color: var(--brand); }
 @media (max-width: 900px) {
   .dash-grid { grid-template-columns: minmax(0, 1fr); }
   .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .stat, .stat--featured { grid-column: span 1; }
-  .stat--featured { min-height: 120px; }
-  .dash-grid .span-2 { grid-column: auto; }
+  .stat, .stat--featured { grid-column: auto; min-height: 154px; }
   .pending-item { flex-wrap: wrap; }
 }
 @media (max-width: 560px) {
   .stat-grid { grid-template-columns: minmax(0, 1fr); }
-  .stat, .stat--featured { grid-column: auto; }
+  .stat-grid {
+    grid-template-areas:
+      "total"
+      "pending"
+      "users"
+      "exchange"
+      "lost"
+      "status";
+  }
   .stat--featured .stat__value { font-size: 32px; }
+  .status-card .donut-wrap { flex-direction: column; padding: 18px 0; }
 }

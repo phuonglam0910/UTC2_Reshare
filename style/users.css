@@ -8,7 +8,15 @@
 
 .user-name { font-weight: 600; }
 .row-locked .user-name { color: var(--ink-2); }
-.table .col-email { color: var(--ink-2); word-break: break-all; }
+.table { min-width: 1030px; table-layout: fixed; }
+.table th:nth-child(1), .table td:nth-child(1) { width: 58px; }
+.table th:nth-child(2), .table td:nth-child(2) { width: 220px; }
+.table th:nth-child(3), .table td:nth-child(3) { width: 250px; }
+.table th:nth-child(4), .table td:nth-child(4) { width: 175px; }
+.table th:nth-child(5), .table td:nth-child(5) { width: 150px; }
+.table th:nth-child(6), .table td:nth-child(6) { width: 180px; }
+.table th.col-actions { text-align: right; }
+.table .col-email { color: var(--ink-2); white-space: nowrap; }
 
 @media (max-width: 900px) {
   .toolbar__count { margin-left: 0; width: 100%; }

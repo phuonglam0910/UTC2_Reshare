@@ -182,6 +182,8 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .chip--pending  { color: var(--pending);  background: var(--pending-bg); }
 .chip--approved { color: var(--gift);     background: var(--gift-bg); }
 .chip--hidden   { color: var(--muted);    background: var(--muted-bg); }
+.chip--completed { color: var(--exchange); background: var(--exchange-bg); }
+.chip--resolved { color: var(--found); background: var(--found-bg); }
 .chip--active   { color: var(--gift);     background: var(--gift-bg); }
 .chip--locked   { color: var(--lost);     background: var(--lost-bg); }
 

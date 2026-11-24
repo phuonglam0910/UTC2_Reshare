@@ -24,8 +24,8 @@
       <main class="content" id="content" tabindex="-1">
         <section class="stat-grid" id="stat-cards" aria-label="Thống kê nhanh"></section>
 
-        <div class="dash-grid">
-          <section class="card span-2" aria-labelledby="status-title">
+        <template id="status-card-template">
+          <section class="card status-card" aria-labelledby="status-title">
             <div class="card__head">
               <h2 class="card__title" id="status-title">Tin đăng theo trạng thái</h2>
             </div>
@@ -36,7 +36,9 @@
               <ul class="legend" id="status-legend" aria-label="Chú giải trạng thái tin đăng"></ul>
             </div>
           </section>
+        </template>
 
+        <div class="dash-grid">
           <section class="card" aria-labelledby="type-title">
             <h2 class="card__title" id="type-title">Số tin theo loại</h2>
             <ul class="bars" id="type-chart"></ul>

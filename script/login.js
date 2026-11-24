@@ -3,17 +3,62 @@
 
   /* --- 1. DỮ LIỆU TÀI KHOẢN MẪU (Thay thế bằng API backend) --- */
   const MOCK_CREDENTIALS = {
+    'admin@st.utc2.edu.vn': {
+      password: 'admin123**',
+      fullName: 'Quản trị viên',
+      role: 'admin'
+    },
     'nguyenvanan@gmail.com': {
       password: 'utc2@123',
       fullName: 'Nguyễn Văn An',
       role: 'student'
     },
-    'admin@st.utc2.edu.vn': {
-      password: 'admin123**',
-      fullName: 'Quản trị viên',
-      role: 'admin'
-    }
+    'tranvanbinh@gmail.com': {
+      password: 'utc2@12345',
+      fullName: 'Trần Văn Bình',
+      role: 'student'
+    },
   };
+
+  /* Đồng bộ hồ sơ tài khoản mẫu với danh sách mà trang quản trị sử dụng. */
+  function syncMockAccounts() {
+    try {
+      const raw = localStorage.getItem('utc2_users');
+      const users = raw === null ? [] : JSON.parse(raw);
+      if (!Array.isArray(users)) {
+        throw new TypeError('Danh sách tài khoản phải là một mảng.');
+      }
+
+      const updatedUsers = users.slice();
+      Object.keys(MOCK_CREDENTIALS).forEach((email) => {
+        const account = MOCK_CREDENTIALS[email];
+        const normalizedEmail = email.trim().toLowerCase();
+        const index = updatedUsers.findIndex((user) =>
+          user && typeof user === 'object' &&
+          String(user.email || '').trim().toLowerCase() === normalizedEmail
+        );
+        const existing = index === -1 ? {} : updatedUsers[index];
+        const profile = Object.assign({}, existing);
+        delete profile.password;
+        Object.assign(profile, {
+          id: profile.id || (account.role === 'admin' ? 'admin' : 'login:' + normalizedEmail),
+          email: normalizedEmail,
+          fullName: account.fullName,
+          role: account.role,
+          status: profile.status || 'active'
+        });
+
+        if (index === -1) updatedUsers.push(profile);
+        else updatedUsers[index] = profile;
+      });
+
+      localStorage.setItem('utc2_users', JSON.stringify(updatedUsers));
+    } catch (error) {
+      console.error('[login] Không thể đồng bộ tài khoản với danh sách quản trị.', error);
+    }
+  }
+
+  syncMockAccounts();
 
   /* --- 2. TRUY XUẤT CÁC PHẦN TỬ DOM --- */
   // Các màn hình

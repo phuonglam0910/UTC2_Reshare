@@ -22,7 +22,7 @@
 
       <main class="content" id="content" tabindex="-1">
         <div class="toolbar" role="search">
-          <input class="field field--search" id="search" type="search" placeholder="Tìm theo tên, mã sinh viên hoặc email" aria-label="Tìm kiếm tài khoản" autocomplete="off">
+          <input class="field field--search" id="search" type="search" placeholder="Tìm theo tên hoặc email" aria-label="Tìm kiếm tài khoản" autocomplete="off">
           <select class="field" id="filter-role" aria-label="Lọc theo vai trò">
             <option value="all">Tất cả vai trò</option>
             <option value="student">Sinh viên UTC2</option>
@@ -43,12 +43,11 @@
             <thead>
               <tr>
                 <th class="col-num">STT</th>
-                <th>Mã sinh viên</th>
                 <th>Họ và tên</th>
                 <th>Email</th>
                 <th>Vai trò</th>
                 <th>Trạng thái</th>
-                <th>Thao tác</th>
+                <th class="col-actions">Thao tác</th>
               </tr>
             </thead>
             <tbody id="users-body"></tbody>
