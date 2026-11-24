@@ -1,0 +1,15 @@
+/* =============================================================
+   users.css – Chỉ dành cho trang Quản lý tài khoản
+   (bảng, thanh công cụ, nhãn... dùng chung đã nằm trong admin.css)
+   ============================================================= */
+.chip--admin   { color: var(--exchange); background: var(--exchange-bg); }
+.chip--student { color: var(--muted);    background: var(--muted-bg); }
+.chip--guest   { color: var(--found);    background: var(--found-bg); }
+
+.user-name { font-weight: 600; }
+.row-locked .user-name { color: var(--ink-2); }
+.table .col-email { color: var(--ink-2); word-break: break-all; }
+
+@media (max-width: 900px) {
+  .toolbar__count { margin-left: 0; width: 100%; }
+}

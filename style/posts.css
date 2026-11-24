@@ -1,0 +1,24 @@
+/* =============================================================
+   posts.css – Chỉ dành cho trang Quản lý tin đăng
+   (bảng, thanh công cụ, nhãn, hộp thoại dùng chung nằm trong admin.css)
+   ============================================================= */
+.table--posts { min-width: 1020px; }
+.table--posts .col-id { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink-2); }
+.table--posts .col-title { max-width: 300px; font-weight: 600; }
+.table--posts .col-title span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.table--posts .col-date { white-space: nowrap; }
+.table--posts .col-owner { min-width: 165px; }
+.row-hidden .col-title { color: var(--ink-2); font-weight: 400; }
+
+.btn--ok { background: var(--gift); color: #fff; }
+.btn--ok:hover { background: #166a47; }
+.btn--danger-ghost { background: var(--surface); border-color: #efc3c3; color: var(--lost); }
+.btn--danger-ghost:hover { background: var(--lost-bg); }
+
+.post-image { display: block; width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; margin-top: 14px; background: var(--bg); }
+.detail dd.detail__desc { font-weight: 400; white-space: pre-wrap; }
+.modal__actions { flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .toolbar__count { margin-left: 0; width: 100%; }
+}
