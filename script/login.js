@@ -311,13 +311,17 @@
     btnSubmitLogin.classList.add('is-busy');
     btnSubmitLogin.disabled = true;
 
-    // Giả lập kết nối xác thực
-    setTimeout(() => {
-      const userAccount = MOCK_CREDENTIALS[emailVal];
-
-      if (userAccount && userAccount.password === pwVal) {
-        // === ĐĂNG NHẬP THÀNH CÔNG ===
-        // Ghi nhớ email nếu tick checkbox
+    fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailVal, password: pwVal })
+    })
+      .then(async response => {
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Không thể đăng nhập.');
+        return data.user;
+      })
+      .then((userAccount) => {
         if (chkRememberEmail.checked) {
           localStorage.setItem('utc2-remember-email', emailVal);
         } else {
@@ -325,39 +329,26 @@
         }
         sessionStorage.setItem('utc2-authenticated', 'true');
         sessionStorage.setItem('utc2-user-name', userAccount.fullName);
-        if (userAccount.role === 'admin') {
-          localStorage.setItem('utc2_currentUser', JSON.stringify({
-            id: 'admin',
-            email: emailVal,
-            fullName: userAccount.fullName,
-            role: 'admin'
-          }));
-        } else {
-          localStorage.removeItem('utc2_currentUser');
-        }
+        sessionStorage.setItem('utc2-user-email', userAccount.email);
+        sessionStorage.setItem('utc2-user-role', userAccount.role);
+        localStorage.setItem('utc2_currentUser', JSON.stringify(userAccount));
 
-        // Chuyển nút sang tick xanh vẽ dần
         btnSubmitLogin.classList.remove('is-busy');
         btnSubmitLogin.classList.add('is-completed');
-
-        // Kích hoạt hiệu ứng Circle Reveal từ vị trí nút
         setTimeout(() => {
-          triggerCircleReveal(userAccount.fullName, userAccount.role === 'admin' ? 'dashboard.html' : 'index.html');
+          triggerCircleReveal(
+            userAccount.fullName,
+            userAccount.role === 'admin' ? 'dashboard.html' : 'index.html'
+          );
         }, 550);
-
-      } else {
-        // === SAI THÔNG TIN ĐĂNG NHẬP ===
+      })
+      .catch((error) => {
         btnSubmitLogin.classList.remove('is-busy');
         btnSubmitLogin.disabled = false;
-        showBanner(
-          loginAlertBox,
-          'Email hoặc mật khẩu không đúng. Vui lòng kiểm tra lại.',
-          true // hiệu ứng rung
-        );
+        showBanner(loginAlertBox, error.message, true);
         txtPassword.value = '';
         txtPassword.focus();
-      }
-    }, 1100);
+      });
   });
 
   /* Hiệu ứng Circle Reveal phủ màn hình */
@@ -388,6 +379,83 @@
       circleExpandOverlay.setAttribute('aria-hidden', 'true');
       window.location.assign(destination);
     }, 2200);
+  }
+
+  /* --- Đăng ký tài khoản, lưu vào SQLite trên máy chủ --- */
+  const formRegister = document.getElementById('formRegister');
+  if (formRegister) {
+    formRegister.addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const fullName = document.getElementById('registerFullName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+      const role = document.getElementById('registerRole').value;
+      const studentId = document.getElementById('registerStudentId').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const passwordConfirm = document.getElementById('registerPasswordConfirm').value;
+      const agreeTerms = document.getElementById('chkAgreeTerms');
+      const submitButton = document.getElementById('btnSubmitRegister');
+      const alertBox = document.getElementById('registerAlertBox');
+      const alertMessage = document.getElementById('registerAlertMsg');
+
+      if (fullName.length < 2) {
+        showBanner(alertBox, 'Họ và tên tối thiểu 2 ký tự.', true);
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showBanner(alertBox, 'Email không đúng định dạng.', true);
+        return;
+      }
+      if (password.length < 8) {
+        showBanner(alertBox, 'Mật khẩu phải có tối thiểu 8 ký tự.', true);
+        return;
+      }
+      if (password !== passwordConfirm) {
+        showBanner(alertBox, 'Mật khẩu xác nhận không khớp.', true);
+        return;
+      }
+      if (agreeTerms && !agreeTerms.checked) {
+        showBanner(alertBox, 'Vui lòng đồng ý với cam kết văn hóa UTC2.', true);
+        return;
+      }
+
+      submitButton.classList.add('is-busy');
+      submitButton.disabled = true;
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fullName, email, role, studentId, password })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.message || 'Không thể tạo tài khoản.');
+
+        const users = JSON.parse(localStorage.getItem('utc2_users') || '[]');
+        if (Array.isArray(users) && !users.some(user => user.email === email)) {
+          users.push(data.user);
+          localStorage.setItem('utc2_users', JSON.stringify(users));
+        }
+
+        sessionStorage.setItem('utc2-authenticated', 'true');
+        sessionStorage.setItem('utc2-user-name', data.user.fullName);
+        sessionStorage.setItem('utc2-user-email', data.user.email);
+        sessionStorage.setItem('utc2-user-role', data.user.role);
+        localStorage.setItem('utc2_currentUser', JSON.stringify(data.user));
+
+        submitButton.classList.remove('is-busy');
+        submitButton.classList.add('is-completed');
+        if (alertBox) alertBox.classList.add('is-shown', 'is-visible');
+        if (alertMessage) alertMessage.textContent = 'Tạo tài khoản thành công!';
+
+        setTimeout(() => {
+          triggerCircleReveal(data.user.fullName, 'index.html');
+        }, 850);
+      } catch (error) {
+        submitButton.classList.remove('is-busy');
+        submitButton.disabled = false;
+        showBanner(alertBox, error.message, true);
+      }
+    });
   }
 
   /* Nút Đăng xuất quay lại màn hình đăng nhập */

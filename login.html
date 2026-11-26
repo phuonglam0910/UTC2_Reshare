@@ -314,54 +314,142 @@
                MÀN HÌNH 3: ĐĂNG KÝ TÀI KHOẢN
                ============================================== -->
           <div class="screen-panel is-hidden-right" id="screenRegister">
-            <form id="formRegister" autocomplete="on">
-              <div class="form-field">
+            <!-- Hộp thông báo đăng ký -->
+            <div class="form-alert-banner" id="registerAlertBox" role="alert">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span id="registerAlertMsg"></span>
+            </div>
+
+            <form id="formRegister" novalidate autocomplete="on">
+              <!-- Họ và tên -->
+              <div class="form-field" id="fieldRegisterFullName">
                 <label class="field-label" for="registerFullName">Họ và tên</label>
                 <div class="input-wrapper">
                   <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                   </svg>
-                  <input class="field-control" id="registerFullName" name="fullName" type="text" autocomplete="name" placeholder="Nhập họ và tên" required>
+                  <input class="field-control" id="registerFullName" name="fullName" type="text" autocomplete="name" placeholder="Ví dụ: Nguyễn Văn An" required>
                 </div>
+                <p class="field-error-text" id="registerFullNameError"></p>
               </div>
 
-              <div class="form-field">
-                <label class="field-label" for="registerEmail">Email</label>
+              <!-- Email -->
+              <div class="form-field" id="fieldRegisterEmail">
+                <label class="field-label" for="registerEmail">Email liên hệ / sinh viên</label>
                 <div class="input-wrapper">
                   <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                   </svg>
-                  <input class="field-control" id="registerEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                  <input class="field-control" id="registerEmail" name="email" type="email" autocomplete="email" placeholder="you@st.utc2.edu.vn hoặc @gmail.com" required>
+                </div>
+                <p class="field-error-text" id="registerEmailError"></p>
+              </div>
+
+              <!-- Đối tượng & MSSV -->
+              <div class="form-row-2col">
+                <div class="form-field" id="fieldRegisterRole">
+                  <label class="field-label" for="registerRole">Đối tượng</label>
+                  <div class="input-wrapper input-wrapper--select">
+                    <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <select class="field-control field-select" id="registerRole" name="role">
+                      <option value="student">Sinh viên UTC2</option>
+                      <option value="guest">Khách / Cựu SV</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-field" id="fieldRegisterStudentId">
+                  <label class="field-label" for="registerStudentId">Mã SV (MSSV)</label>
+                  <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/>
+                    </svg>
+                    <input class="field-control" id="registerStudentId" name="studentId" type="text" placeholder="6251071001">
+                  </div>
+                  <p class="field-error-text" id="registerStudentIdError"></p>
                 </div>
               </div>
 
-              <div class="form-field">
+              <!-- Mật khẩu -->
+              <div class="form-field" id="fieldRegisterPassword">
                 <label class="field-label" for="registerPassword">Mật khẩu</label>
-                <div class="input-wrapper">
+                <div class="input-wrapper input-wrapper--password">
                   <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                   </svg>
                   <input class="field-control" id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="Tối thiểu 8 ký tự" required>
+                  <button class="btn-toggle-eye" id="btnToggleRegisterPw" type="button" aria-label="Hiện mật khẩu">
+                    <svg class="icon-eye-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <svg class="icon-eye-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>
+                    </svg>
+                  </button>
                 </div>
+                <!-- Độ mạnh mật khẩu -->
+                <div class="password-strength-container" id="passwordStrengthContainer">
+                  <div class="strength-bars">
+                    <span class="strength-bar" id="strBar1"></span>
+                    <span class="strength-bar" id="strBar2"></span>
+                    <span class="strength-bar" id="strBar3"></span>
+                    <span class="strength-bar" id="strBar4"></span>
+                  </div>
+                  <span class="strength-text" id="passwordStrengthText">Nhập ít nhất 8 ký tự</span>
+                </div>
+                <p class="field-error-text" id="registerPasswordError"></p>
               </div>
 
-              <div class="form-field">
-                <label class="field-label" for="registerPasswordConfirm">Nhập lại mật khẩu</label>
-                <div class="input-wrapper">
+              <!-- Nhập lại mật khẩu -->
+              <div class="form-field" id="fieldRegisterPasswordConfirm">
+                <label class="field-label" for="registerPasswordConfirm">Xác nhận mật khẩu</label>
+                <div class="input-wrapper input-wrapper--password">
                   <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                   </svg>
                   <input class="field-control" id="registerPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Nhập lại mật khẩu" required>
+                  <button class="btn-toggle-eye" id="btnToggleRegisterPwConfirm" type="button" aria-label="Hiện mật khẩu">
+                    <svg class="icon-eye-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <svg class="icon-eye-hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>
+                    </svg>
+                  </button>
                 </div>
+                <p class="field-error-text" id="registerPasswordConfirmError"></p>
               </div>
 
-              <button class="btn-primary-action" type="button" aria-describedby="registerNote">
-                <span>Tạo tài khoản</span>
+              <!-- Cam kết điều khoản -->
+              <div class="form-aux-row">
+                <label class="custom-checkbox">
+                  <input type="checkbox" id="chkAgreeTerms" checked />
+                  <span class="checkbox-box"></span>
+                  <span class="checkbox-text">Tôi cam kết thông tin trung thực & tuân thủ văn hóa UTC2</span>
+                </label>
+              </div>
+
+              <!-- Nút Tạo tài khoản -->
+              <button class="btn-primary-action" id="btnSubmitRegister" type="submit">
+                <span class="action-label">Tạo tài khoản</span>
                 <svg class="btn-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
+                <span class="action-spinner" aria-hidden="true"></span>
+                <svg class="action-tick-icon" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
               </button>
-              
+
+              <div class="form-footer-hint">
+                <span>Đã có tài khoản?</span>
+                <a class="text-link" href="#" id="linkSwitchToLogin">Đăng nhập ngay</a>
+              </div>
             </form>
           </div>
 

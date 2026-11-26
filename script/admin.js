@@ -97,11 +97,7 @@
 
   function getUsers() {
     const storedUsers = readList(CONFIG.KEYS.USERS);
-    const users = storedUsers.filter(user =>
-      LOGIN_ACCOUNT_EMAILS.has(String(user.email || '').trim().toLowerCase())
-    );
-    if (users.length !== storedUsers.length) writeList(CONFIG.KEYS.USERS, users);
-    return users.map(user => Object.assign({}, user, { role: getUserRole(user) }));
+    return storedUsers.map(user => Object.assign({}, user, { role: getUserRole(user) }));
   }
   function getPosts() {
     try {

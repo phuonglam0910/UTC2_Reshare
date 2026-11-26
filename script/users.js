@@ -61,6 +61,19 @@ UTC2Admin.ready(function () {
     } else {
       body.innerHTML = list.map(rowHtml).join('');
     }
+
+    async function loadDatabaseUsers() {
+      try {
+        const response = await fetch('/api/users');
+        if (!response.ok) throw new Error('Không thể tải tài khoản từ cơ sở dữ liệu.');
+        const data = await response.json();
+        A.saveUsers(data.users);
+        loadDatabaseUsers();
+      } catch (error) {
+        A.toast(error.message, 'error');
+        render();
+      }
+    }
     $('result-count').textContent = 'Hiển thị ' + list.length + ' / ' + all.length + ' tài khoản';
   }
 
@@ -108,6 +121,19 @@ UTC2Admin.ready(function () {
     const target = fresh.find(x => x.id === id);
     if (!target) { A.toast('Tài khoản không còn tồn tại.', 'error'); render(); return; }
     target.status = willLock ? 'locked' : 'active';
+
+    try {
+      const response = await fetch('/api/users/' + encodeURIComponent(id) + '/status', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: willLock ? 'locked' : 'active' })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Không thể cập nhật tài khoản.');
+    } catch (error) {
+      A.toast(error.message, 'error');
+      return;
+    }
 
     if (A.saveUsers(fresh)) {
       A.toast((willLock ? 'Đã khóa tài khoản ' : 'Đã mở khóa tài khoản ') + target.fullName + '.', 'success');
