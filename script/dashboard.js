@@ -20,8 +20,7 @@ UTC2Admin.ready(function () {
     return {
       users, posts,
       totalUsers: users.length,
-      students: users.filter(u => A.getUserRole(u) === 'student').length,
-      guests: users.filter(u => A.getUserRole(u) === 'guest').length,
+      userCount: users.filter(u => A.getUserRole(u) === 'user').length,
       locked: count(users, 'status', 'locked'),
       totalPosts: posts.length,
       type: {
@@ -43,17 +42,27 @@ UTC2Admin.ready(function () {
   /* Hai chỉ số chính được đặt trước để chiếm vùng hiển thị nổi bật. */
   function renderCards(s) {
     const cards = [
-      { cls: 'stat--featured stat--total', icon: 'file', value: s.totalPosts, label: 'Tổng tin đăng',
+      {
+        cls: 'stat--featured stat--total', icon: 'file', value: s.totalPosts, label: 'Tổng tin đăng',
         link: 'posts.html',
-        hint: s.status.approved + ' đang đăng, ' + (s.status.completed + s.status.resolved) + ' đã hoàn tất, ' + s.status.hidden + ' ẩn khỏi quản trị' },
-      { cls: 'stat--featured stat--alert', icon: 'clock', value: s.status.pending, label: 'Tin chờ duyệt',
-        hint: s.status.pending > 0 ? 'Bấm để xem và duyệt' : 'Không có tin nào cần xử lý', link: 'posts.html?status=pending' },
-      { cls: 'stat--users', icon: 'users', value: s.totalUsers, label: 'Tổng tài khoản', link: 'users.html',
-        hint: s.students + ' sinh viên UTC2, ' + s.guests + ' khách, ' + s.locked + ' đang khóa' },
-      { cls: 'stat--exchange', icon: 'swap', value: s.type.exchange + s.type.gift, label: 'Tin trao đổi / cho tặng', link: 'posts.html?type=exchange%2Cgift',
-        hint: s.type.exchange + ' trao đổi, ' + s.type.gift + ' cho tặng' },
-      { cls: 'stat--lost', icon: 'search', value: s.type.lost + s.type.found, label: 'Tin thất lạc / nhặt được', link: 'posts.html?type=lost%2Cfound',
-        hint: s.type.lost + ' báo mất, ' + s.type.found + ' nhặt được' }
+        hint: s.status.approved + ' đang đăng, ' + (s.status.completed + s.status.resolved) + ' đã hoàn tất, ' + s.status.hidden + ' ẩn tin'
+      },
+      {
+        cls: 'stat--featured stat--alert', icon: 'clock', value: s.status.pending, label: 'Tin chờ duyệt',
+        hint: s.status.pending > 0 ? 'Bấm để xem và duyệt' : 'Không có tin nào cần xử lý', link: 'posts.html?status=pending'
+      },
+      {
+        cls: 'stat--users', icon: 'users', value: s.totalUsers, label: 'Tổng tài khoản', link: 'users.html',
+        hint: s.userCount + ' người dùng, ' + s.locked + ' đang khóa'
+      },
+      {
+        cls: 'stat--exchange', icon: 'swap', value: s.type.exchange + s.type.gift, label: 'Tin trao đổi / cho tặng', link: 'posts.html?type=exchange%2Cgift',
+        hint: s.type.exchange + ' trao đổi, ' + s.type.gift + ' cho tặng'
+      },
+      {
+        cls: 'stat--lost', icon: 'search', value: s.type.lost + s.type.found, label: 'Tin thất lạc / nhặt được', link: 'posts.html?type=lost%2Cfound',
+        hint: s.type.lost + ' báo mất, ' + s.type.found + ' nhặt được'
+      }
     ];
 
     const statCards = $('stat-cards');
@@ -127,11 +136,11 @@ UTC2Admin.ready(function () {
     }
     box.innerHTML = list.map(p =>
       '<li class="pending-item">' +
-        '<div class="pending-item__main">' +
-          '<div class="pending-item__title">' + A.esc(p.title) + '</div>' +
-          '<div class="pending-item__meta">' + A.esc(owners[p.ownerId] || 'Không rõ người đăng') + ', ' + A.formatDate(p.createdAt) + '</div>' +
-        '</div>' +
-        '<span class="chip chip--' + A.esc(p.type) + '">' + A.esc(A.TYPE_LABEL[p.type] || p.type) + '</span>' +
+      '<div class="pending-item__main">' +
+      '<div class="pending-item__title">' + A.esc(p.title) + '</div>' +
+      '<div class="pending-item__meta">' + A.esc(owners[p.ownerId] || 'Không rõ người đăng') + ', ' + A.formatDate(p.createdAt) + '</div>' +
+      '</div>' +
+      '<span class="chip chip--' + A.esc(p.type) + '">' + A.esc(A.TYPE_LABEL[p.type] || p.type) + '</span>' +
       '</li>'
     ).join('');
   }
@@ -149,8 +158,8 @@ UTC2Admin.ready(function () {
   // Khi trang khác (tab khác) đổi dữ liệu → tự cập nhật lại số liệu
   window.addEventListener('storage', function (e) {
     if (e.key === A.CONFIG.KEYS.USERS ||
-        e.key === A.POST_SOURCES.exchange ||
-        e.key === A.POST_SOURCES.lostFound ||
-        e.key === A.POST_SOURCES.statusOverrides) render();
+      e.key === A.POST_SOURCES.exchange ||
+      e.key === A.POST_SOURCES.lostFound ||
+      e.key === A.POST_SOURCES.statusOverrides) render();
   });
 });

@@ -46,21 +46,21 @@
   const POST_STATUS_LABEL = {
     pending: 'Chờ duyệt',
     approved: 'Đang đăng',
-    hidden: 'Ẩn khỏi quản trị',
+    hidden: 'Ẩn tin',
     completed: 'Đã trao đổi',
     resolved: 'Đã trao trả'
   };
   const USER_STATUS_LABEL = { active: 'Hoạt động', locked: 'Đã khóa' };
-  const ROLE_LABEL = { student: 'Sinh viên UTC2', admin: 'Quản trị viên', guest: 'Khách' };
+  const ROLE_LABEL = { user: 'Người dùng', admin: 'Quản trị viên' };
   const POST_SOURCES = {
     exchange: 'utc2-reshare-item-exchange-v1',
     lostFound: 'utc2-reshare-lost-found-v1',
     statusOverrides: 'utc2-admin-post-statuses-v1'
   };
+  const POST_CODE_COUNTER_KEY = 'utc2-reshare-post-code-counter-v1';
   const LOGIN_ACCOUNT_EMAILS = new Set([
     'admin@st.utc2.edu.vn',
     'nguyenvanan@gmail.com',
-    'tranvibinh@gmail.com'
   ]);
 
   /* ---------- 2. DATA LAYER ---------- */
@@ -90,14 +90,85 @@
 
   function getUserRole(user) {
     const role = user && user.role;
-    if (role === 'admin' || role === 'student' || role === 'guest') return role;
-    const email = String(user && user.email || '').trim().toLowerCase();
-    return email.endsWith('@st.utc2.edu.vn') ? 'student' : 'guest';
+    return role === 'admin' ? 'admin' : 'user';
+  }
+
+  function allocatePostCode(usedCodes) {
+    const savedCounter = localStorage.getItem(POST_CODE_COUNTER_KEY);
+    let counter = savedCounter === null ? 0 : Number(savedCounter);
+    if (!Number.isInteger(counter) || counter < 0 || counter > 999999) {
+      throw new Error('Bộ đếm mã tin không hợp lệ.');
+    }
+
+    usedCodes.forEach(code => {
+      counter = Math.max(counter, Number(code));
+    });
+    for (let next = counter + 1; next <= 999999; next += 1) {
+      const code = String(next).padStart(6, '0');
+      if (usedCodes.has(code)) continue;
+      localStorage.setItem(POST_CODE_COUNTER_KEY, String(next));
+      usedCodes.add(code);
+      return code;
+    }
+    throw new Error('Đã hết mã tin 6 chữ số.');
+  }
+
+  function ensurePostCodes() {
+    const exchangePosts = readList(POST_SOURCES.exchange);
+    const lostFoundPosts = readList(POST_SOURCES.lostFound);
+    const allPosts = exchangePosts.concat(lostFoundPosts);
+    const usedCodes = new Set();
+    const postsToAssign = [];
+
+    allPosts.forEach(post => {
+      const code = post.postCode;
+      if (typeof code === 'string' && /^\d{6}$/.test(code) && !usedCodes.has(code)) {
+        usedCodes.add(code);
+      } else {
+        postsToAssign.push(post);
+      }
+    });
+
+    if (postsToAssign.length) {
+      try {
+        postsToAssign.forEach(post => {
+          post.postCode = allocatePostCode(usedCodes);
+        });
+        if (exchangePosts.some(post => postsToAssign.includes(post)) &&
+          !writeList(POST_SOURCES.exchange, exchangePosts)) {
+          throw new Error('Không thể lưu mã tin trao đổi.');
+        }
+        if (lostFoundPosts.some(post => postsToAssign.includes(post)) &&
+          !writeList(POST_SOURCES.lostFound, lostFoundPosts)) {
+          throw new Error('Không thể lưu mã tin thất lạc.');
+        }
+      } catch (err) {
+        console.error('[admin] Không thể cấp mã tin 6 chữ số.', err);
+        toast('Không thể cấp hoặc lưu mã tin 6 chữ số.', 'error');
+        throw err;
+      }
+    }
+
+    return { exchangePosts, lostFoundPosts };
   }
 
   function getUsers() {
     const storedUsers = readList(CONFIG.KEYS.USERS);
+<<<<<<< Updated upstream
     return storedUsers.map(user => Object.assign({}, user, { role: getUserRole(user) }));
+=======
+    const users = storedUsers.filter(user =>
+      LOGIN_ACCOUNT_EMAILS.has(String(user.email || '').trim().toLowerCase())
+    );
+    const normalizedUsers = users.map(user =>
+      Object.assign({}, user, { role: getUserRole(user) })
+    );
+    const rolesChanged = normalizedUsers.some((user, index) => user.role !== users[index].role);
+    if (users.length !== storedUsers.length || rolesChanged) {
+      writeList(CONFIG.KEYS.USERS, normalizedUsers);
+    }
+    return normalizedUsers;
+>>>>>>> Stashed changes
   }
   function getPosts() {
     try {
@@ -106,42 +177,55 @@
       console.error('[admin] Không thể xóa dữ liệu tin đăng cũ.', err);
     }
 
+    const records = ensurePostCodes();
     const overrides = new Map(readList(POST_SOURCES.statusOverrides)
       .filter(item => item && (item.status === 'approved' || item.status === 'hidden'))
       .map(item => [item.id, item.status]));
-    const exchangePosts = readList(POST_SOURCES.exchange)
+    const exchangePosts = records.exchangePosts
       .filter(item => typeof item.id === 'string' && typeof item.itemName === 'string')
       .map(item => {
         const id = 'exchange:' + item.id;
-        const defaultStatus = item.status === 'completed' ? 'completed' : 'approved';
+        const reviewStatus = overrides.get(id);
+        const status = reviewStatus === 'hidden'
+          ? 'hidden'
+          : reviewStatus === 'approved'
+            ? (item.status === 'completed' ? 'completed' : 'approved')
+            : 'pending';
         return {
           id,
+          postCode: item.postCode,
           sourceKey: POST_SOURCES.exchange,
           sourceRecord: item,
-          defaultStatus,
+          isApproved: reviewStatus === 'approved',
           title: item.itemName,
           ownerName: item.contactName || '',
           type: 'exchange',
-          status: overrides.get(id) || defaultStatus,
+          status,
           createdAt: item.date,
           description: item.description || ''
         };
       });
-    const lostFoundPosts = readList(POST_SOURCES.lostFound)
+    const lostFoundPosts = records.lostFoundPosts
       .filter(item => typeof item.id === 'string' && typeof item.itemName === 'string'
         && (item.type === 'lost' || item.type === 'found'))
       .map(item => {
         const id = 'lost-found:' + item.id;
-        const defaultStatus = item.status === 'resolved' ? 'resolved' : 'approved';
+        const reviewStatus = overrides.get(id);
+        const status = reviewStatus === 'hidden'
+          ? 'hidden'
+          : reviewStatus === 'approved'
+            ? (item.status === 'resolved' ? 'resolved' : 'approved')
+            : 'pending';
         return {
           id,
+          postCode: item.postCode,
           sourceKey: POST_SOURCES.lostFound,
           sourceRecord: item,
-          defaultStatus,
+          isApproved: reviewStatus === 'approved',
           title: item.itemName,
           ownerName: item.contactName || '',
           type: item.type,
-          status: overrides.get(id) || defaultStatus,
+          status,
           createdAt: item.date,
           description: item.description || ''
         };
@@ -156,8 +240,8 @@
     const lostFoundPosts = list.filter(post => post.sourceKey === POST_SOURCES.lostFound)
       .map(post => post.sourceRecord);
     const overrides = list
-      .filter(post => post.status !== post.defaultStatus)
-      .map(post => ({ id: post.id, status: post.status }));
+      .filter(post => post.status === 'hidden' || post.isApproved)
+      .map(post => ({ id: post.id, status: post.status === 'hidden' ? 'hidden' : 'approved' }));
 
     if (!writeList(POST_SOURCES.exchange, exchangePosts)) return false;
     if (!writeList(POST_SOURCES.lostFound, lostFoundPosts)) return false;
@@ -186,6 +270,7 @@
 
   const ICONS = {
     grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+    home: '<path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/>',
     users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
     file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8"/>',
     logout: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
@@ -332,6 +417,8 @@
       '<span class="brand__text">UTC2 RESHARE<small>Trang quản trị</small></span>' +
       '</div>' +
       '<nav class="nav" aria-label="Menu quản trị">' + nav + '</nav>' +
+      '<a class="nav-link nav-home" href="index.html" title="Về trang chủ">' +
+      icon('home') + '<span class="nav-label">Về trang chủ</span></a>' +
       '<button type="button" class="nav-link nav-logout" data-action="logout" title="Đăng xuất">' +
       icon('logout') + '<span class="nav-label">Đăng xuất</span></button>' +
       '<button type="button" class="sidebar-resize" role="separator" aria-orientation="vertical" aria-label="Kéo để thay đổi độ rộng thanh bên" aria-valuemin="200" aria-valuemax="420" aria-valuenow="252" tabindex="0"></button>';
@@ -365,7 +452,7 @@
     });
     if (!ok) return;
     try { localStorage.removeItem(CONFIG.KEYS.SESSION); } catch (e) { /* bỏ qua */ }
-    toast('Đã đăng xuất (mô phỏng).', 'success');
+    toast('Đã đăng xuất.', 'success');
     const dest = CONFIG.LOGOUT_URL || CONFIG.LOGIN_URL;
     if (dest) setTimeout(() => { window.location.href = dest; }, 700);
   }

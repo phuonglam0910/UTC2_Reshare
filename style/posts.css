@@ -17,8 +17,21 @@
 
 .post-image { display: block; width: 100%; max-height: 220px; object-fit: cover; border-radius: 8px; margin-top: 14px; background: var(--bg); }
 .detail dd.detail__desc { font-weight: 400; white-space: pre-wrap; }
+.modal--wide { width: min(720px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; }
+.detail { grid-template-columns: minmax(130px, .35fr) minmax(0, 1fr); }
 .modal__actions { flex-wrap: wrap; }
 
 @media (max-width: 900px) {
   .toolbar__count { margin-left: 0; width: 100%; }
+}
+
+.table--posts .col-id { color: #77758d; font-size: 13px; }
+.table--posts .col-title { color: #28283b; }
+.row-hidden { color: #89899a; }
+.btn--ok { border-radius: 8px; }
+.btn--danger-ghost { border-radius: 8px; }
+
+@media (max-width: 600px) {
+  .table--posts { min-width: 980px; }
+  .toolbar { padding: 12px; }
 }

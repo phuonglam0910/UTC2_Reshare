@@ -11,12 +11,7 @@
     'nguyenvanan@gmail.com': {
       password: 'utc2@123',
       fullName: 'Nguyễn Văn An',
-      role: 'student'
-    },
-    'tranvanbinh@gmail.com': {
-      password: 'utc2@12345',
-      fullName: 'Trần Văn Bình',
-      role: 'student'
+      role: 'user'
     },
   };
 

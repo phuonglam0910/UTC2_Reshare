@@ -2,6 +2,9 @@
   'use strict';
 
   const storageKey = 'utc2-reshare-lost-found-v1';
+  const moderationKey = 'utc2-admin-post-statuses-v1';
+  const postCodeCounterKey = 'utc2-reshare-post-code-counter-v1';
+  const exchangeStorageKey = 'utc2-reshare-item-exchange-v1';
   const list = document.getElementById('lf-list');
   const emptyState = document.getElementById('lf-empty');
   const emptyTitle = document.getElementById('lf-empty-title');
@@ -17,6 +20,8 @@
   const formError = document.getElementById('lf-form-error');
   const detailError = document.getElementById('lf-detail-error');
   let reports = [];
+  let approvedIds = new Set();
+  let isSubmitting = false;
   let selectedReportId = null;
   let storageReady = true;
 
@@ -97,7 +102,12 @@
     const term = normalize(searchInput.value.trim());
     const selectedType = typeFilter.value;
     const selectedStatus = statusFilter.value;
-    const filtered = reports.filter(function (report) {
+    const visible = reports.filter(function (report) {
+      return approvedIds.has('lost-found:' + report.id);
+    }).map(function (report) {
+      return Object.assign({}, report, { status: report.status === 'pending' ? 'open' : report.status });
+    });
+    const filtered = visible.filter(function (report) {
       return (!term || normalize(report.itemName).includes(term))
         && (selectedType === 'all' || report.type === selectedType)
         && (selectedStatus === 'all' || report.status === selectedStatus);
@@ -108,8 +118,11 @@
       list.appendChild(createCard(report));
     });
     emptyState.hidden = filtered.length > 0;
-    resultCount.textContent = 'Hiển thị ' + filtered.length + ' / ' + reports.length + ' tin';
-    if (reports.length === 0) {
+    resultCount.textContent = 'Hiển thị ' + filtered.length + ' / ' + visible.length + ' tin';
+    if (visible.length === 0 && reports.length > 0) {
+      emptyTitle.textContent = 'Tin đang chờ kiểm duyệt';
+      emptyDescription.textContent = 'Tin sẽ xuất hiện tại đây sau khi được quản trị viên duyệt.';
+    } else if (visible.length === 0) {
       emptyTitle.textContent = 'Chưa có tin thất lạc';
       emptyDescription.textContent = 'Hãy đăng tin báo mất hoặc nhặt được để cộng đồng UTC2 cùng hỗ trợ.';
     } else {
@@ -124,6 +137,28 @@
     storageError.hidden = false;
   }
 
+  function refreshApprovals() {
+    try {
+      const saved = window.localStorage.getItem(moderationKey);
+      const parsed = saved === null ? [] : JSON.parse(saved);
+      if (!Array.isArray(parsed) || parsed.some(function (item) {
+        return !item || typeof item.id !== 'string'
+          || (item.status !== 'approved' && item.status !== 'hidden');
+      })) {
+        throw new Error('Dữ liệu kiểm duyệt đã lưu không đúng định dạng.');
+      }
+      approvedIds = new Set(parsed.filter(function (item) {
+        return item.status === 'approved';
+      }).map(function (item) { return item.id; }));
+      return true;
+    } catch (error) {
+      approvedIds = new Set();
+      storageReady = false;
+      showStorageError('Không thể tải trạng thái kiểm duyệt. Tin chưa xác nhận sẽ không được hiển thị. ' + error.message);
+      return false;
+    }
+  }
+
   function readReports() {
     try {
       const saved = window.localStorage.getItem(storageKey);
@@ -133,7 +168,7 @@
         return !report || typeof report.id !== 'string'
           || typeof report.itemName !== 'string'
           || (report.type !== 'lost' && report.type !== 'found')
-          || (report.status !== 'open' && report.status !== 'resolved')
+          || (report.status !== 'pending' && report.status !== 'open' && report.status !== 'resolved')
           || typeof report.date !== 'string';
       })) {
         throw new Error('Dữ liệu tin đăng đã lưu không đúng định dạng.');
@@ -199,6 +234,47 @@
     return Date.now().toString(36) + Math.random().toString(36).slice(2);
   }
 
+  function makePostCode() {
+    function allocate() {
+      const usedCodes = new Set();
+      [exchangeStorageKey, storageKey].forEach(function (key) {
+        const saved = window.localStorage.getItem(key);
+        const records = saved === null ? [] : JSON.parse(saved);
+        if (!Array.isArray(records) || records.some(function (record) {
+          return !record || typeof record !== 'object';
+        })) {
+          throw new Error('Dữ liệu tin đăng đã lưu không đúng định dạng.');
+        }
+        records.forEach(function (record) {
+          if (typeof record.postCode === 'string' && /^\d{6}$/.test(record.postCode)) {
+            usedCodes.add(record.postCode);
+          }
+        });
+      });
+
+      const savedCounter = window.localStorage.getItem(postCodeCounterKey);
+      let counter = savedCounter === null ? 0 : Number(savedCounter);
+      if (!Number.isInteger(counter) || counter < 0 || counter > 999999) {
+        throw new Error('Bộ đếm mã tin không hợp lệ.');
+      }
+      usedCodes.forEach(function (code) {
+        counter = Math.max(counter, Number(code));
+      });
+      for (let next = counter + 1; next <= 999999; next += 1) {
+        const code = String(next).padStart(6, '0');
+        if (usedCodes.has(code)) continue;
+        window.localStorage.setItem(postCodeCounterKey, String(next));
+        return code;
+      }
+      throw new Error('Đã hết mã tin 6 chữ số.');
+    }
+
+    if (navigator.locks && typeof navigator.locks.request === 'function') {
+      return navigator.locks.request(postCodeCounterKey, allocate);
+    }
+    return Promise.resolve().then(allocate);
+  }
+
   function closeDialogs() {
     [formDialog, detailDialog].forEach(function (dialog) {
       if (dialog.open) dialog.close();
@@ -230,8 +306,9 @@
   typeFilter.addEventListener('change', updateList);
   statusFilter.addEventListener('change', updateList);
 
-  reportForm.addEventListener('submit', function (event) {
+  reportForm.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (isSubmitting) return;
     formError.hidden = true;
     const formData = new FormData(reportForm);
     const phone = String(formData.get('phone') || '').trim();
@@ -247,8 +324,20 @@
       return;
     }
 
+    isSubmitting = true;
+    let postCode;
+    try {
+      postCode = await makePostCode();
+    } catch (error) {
+      isSubmitting = false;
+      formError.textContent = 'Không thể cấp mã tin 6 chữ số. ' + error.message;
+      formError.hidden = false;
+      return;
+    }
+
     const report = {
       id: makeId(),
+      postCode: postCode,
       type: String(formData.get('type')),
       itemName: String(formData.get('itemName')).trim(),
       description: String(formData.get('description')).trim(),
@@ -257,13 +346,15 @@
       contactName: String(formData.get('contactName')).trim(),
       phone: phone,
       email: email,
-      status: 'open'
+      status: 'pending'
     };
     reports.unshift(report);
     if (!saveReports()) {
       reports.shift();
+      isSubmitting = false;
       return;
     }
+    isSubmitting = false;
     formDialog.close();
     searchInput.value = '';
     typeFilter.value = 'all';
@@ -284,7 +375,18 @@
     detailDialog.close();
   });
 
+  window.addEventListener('storage', function (event) {
+    if (event.key === moderationKey) {
+      refreshApprovals();
+      updateList();
+    } else if (event.key === storageKey) {
+      reports = readReports();
+      updateList();
+    }
+  });
+
   document.getElementById('lf-year').textContent = String(new Date().getFullYear());
+  refreshApprovals();
   reports = readReports();
   updateList();
 })();
