@@ -20,12 +20,3 @@
 @media (max-width: 900px) {
   .toolbar__count { margin-left: 0; width: 100%; }
 }
-
-.table .col-email { color: #77758d; }
-.user-name { color: #28283b; }
-.row-locked { color: #89899a; }
-.table .col-actions { color: #66667a; }
-
-@media (max-width: 600px) {
-  .toolbar { padding: 12px; }
-}
