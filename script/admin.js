@@ -58,11 +58,6 @@
     statusOverrides: 'utc2-admin-post-statuses-v1'
   };
   const POST_CODE_COUNTER_KEY = 'utc2-reshare-post-code-counter-v1';
-  const LOGIN_ACCOUNT_EMAILS = new Set([
-    'admin@st.utc2.edu.vn',
-    'nguyenvanan@gmail.com',
-  ]);
-
   /* ---------- 2. DATA LAYER ---------- */
   function readList(key) {
     try {
@@ -154,21 +149,7 @@
 
   function getUsers() {
     const storedUsers = readList(CONFIG.KEYS.USERS);
-<<<<<<< Updated upstream
     return storedUsers.map(user => Object.assign({}, user, { role: getUserRole(user) }));
-=======
-    const users = storedUsers.filter(user =>
-      LOGIN_ACCOUNT_EMAILS.has(String(user.email || '').trim().toLowerCase())
-    );
-    const normalizedUsers = users.map(user =>
-      Object.assign({}, user, { role: getUserRole(user) })
-    );
-    const rolesChanged = normalizedUsers.some((user, index) => user.role !== users[index].role);
-    if (users.length !== storedUsers.length || rolesChanged) {
-      writeList(CONFIG.KEYS.USERS, normalizedUsers);
-    }
-    return normalizedUsers;
->>>>>>> Stashed changes
   }
   function getPosts() {
     try {
