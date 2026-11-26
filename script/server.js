@@ -6,7 +6,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { DatabaseSync } = require('node:sqlite');
 
-const ROOT = __dirname;
+const ROOT = path.resolve(__dirname, '..');
 const PORT = Number(process.env.PORT || 3000);
 const dataDir = path.join(ROOT, 'data');
 fs.mkdirSync(dataDir, { recursive: true });
